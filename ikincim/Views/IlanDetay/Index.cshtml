@@ -1,0 +1,211 @@
+﻿@model KategorilerIlanlarUrunlerUser
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <main class="tm-main" style="margin-left:200px;">
+    <!-- Search form -->
+    <div class="row tm-row mt-5">
+        <div class="kutu1" style="margin-left:-195px; margin-top:-15px;">
+            <div class="accordion" id="accordionExample" style="background-color:whitesmoke; width:300px;">
+                <div class="accordion-item" style="background-color:whitesmoke">
+                    <a href="#" class="list-group-item list-group-item-action" style="border:1px;background-color:whitesmoke ;border-top-style:inset; border-top-color:red; border-top-width:5px; text-align:center; font-size:large">
+                        Kategoriler
+                    </a>
+                    @foreach (var item in Model.kategorilers)
+                    {
+                        <h2 class="accordion-header" id="a-@item.Id">
+                            <a class="accordion-button" href="/HomePage/Index/@item.Id" data-bs-toggle="collapse" data-bs-target="#b-@item.Id" aria-expanded="true" aria-controls="b-@item.Id" style="background-color:whitesmoke; text-decoration:none; border:1px white solid">
+                                <i class="@item.IconClass" style="margin-right:5px;"></i>@item.KategoriAd
+                            </a>
+                        </h2>
+                    }
+                    @foreach (var item in Model.kategorilers2)
+                    {
+                        <div id="b-@item.Id" class="accordion-collapse collapse" aria-labelledby="a-@item.Id" data-bs-parent="#accordionExample" style="background-color:whitesmoke">
+                            <div class="accordion-body">
+                                <a href="/Urunler/Index/@item.Id" style="text-decoration:none; text-align:center; font-size:18px;">Tüm @item.KategoriAd İlanları</a>
+                            </div>
+                        </div>
+                    }
+                    @foreach (var item in Model.urunlers2)
+                    {
+                        <div id="b-@item.KategorilerId" class="accordion-collapse collapse" aria-labelledby="a-@item.KategorilerId" data-bs-parent="#accordionExample" style="background-color:whitesmoke">
+                            <div class="accordion-body">
+                                <a href="/Ilanlar/Index/@item.Id" style="text-decoration:none">♦ @item.UrunCesiti</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+@foreach(var item in Model.userVeIlanlarTMPs)
+{
+        <div class="col-lg-7 tm-post-col"style="border-top-style:outset; border-left-style:none; border-right-style:none; border-bottom-style:inset; border-radius:15px; margin-left:-10px;">
+            <div class="tm-post-full">
+                <div class="mb-4">
+                <div>
+                    <h2 class="tm-color-primary tm-post-title">Açıklama</h2>
+                    <hr class="tm-hr-primary tm-mb-45">
+                    <div class="tm-comment tm-mb-45">
+                        <div>
+                            <p>
+                                @item.Aciklama
+                            </p>
+                        </div>
+                    </div>
+                    <hr class="tm-hr-primary tm-mb-45">
+                </div>
+                <h4 class="tm-color-primary tm-post-title">Ürün Fotoğrafları</h4>
+                    <a href="#" class="d-block tm-mb-40">
+                        @* <figure>
+                            <img src="https://refikaninmutfagi.com/wp-content/uploads/2022/04/KAHVALTI_KASESI_67A2829-scaled.jpg" alt="Image" class="mb-3 img-fluid">
+                        </figure> *@
+                         <div id="demo" class="carousel slide container" data-bs-ride="carousel">
+
+                            <!-- Indicators/dots -->
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                                <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                                <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                                <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
+                                <button type="button" data-bs-target="#demo" data-bs-slide-to="4"></button>
+                            </div>
+
+                            <!-- The slideshow/carousel -->
+
+                            <div class="carousel-inner">
+
+                                <div class="carousel-item active">
+                                    <figure>
+                                        <img src="@item.FotoUrl1" alt="Los Angeles" class=" mb-3 img-fluid" style="height:500px; width:1050px; ">
+                                    </figure>
+                                </div>
+                                <div class="carousel-item">
+                                    <figure>
+                                        <img src="@item.FotoUrl2" alt="Chicago" class="mb-3 img-fluid" style="height:500px; width:1050px;">
+                                    </figure>
+                                </div>
+                                <div class="carousel-item">
+                                    <figure>
+                                        <img src="@item.FotoUrl3" alt="New York" class="mb-3 img-fluid" style="height:500px; width:1050px;">
+                                    </figure>
+                                </div>
+                                <div class="carousel-item">
+                                    <figure>
+                                        <img src="@item.FotoUrl4" alt="Paris" class="mb-3 img-fluid" style="height:500px; width:1050px;">
+                                    </figure>
+                                </div>
+                                <div class="carousel-item">
+                                    <figure>
+                                        <img src="@item.FotoUrl5" alt="Ankara" class="mb-3 img-fluid" style="height:500px; width:1050px;">
+                                    </figure>
+                                </div>
+                            </div>
+
+                            <!-- Left and right controls/icons -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button> 
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Comments -->
+            </div>
+        </div>
+            <div class="col-lg-3 tm-aside-col" style="border-top-style:outset; border-left-style:outset; border-right-style:inset; border-bottom-style:inset; border-radius:15px;">
+            <div class="tm-post-sidebar">                    
+                    <table class="table table-striped" style="width:320px;">
+                        <thead>
+                            <tr>
+                                <th style="background-color:whitesmoke">İlan Sahibi Bilgileri</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ad-Soyad</td>
+                                <td>@item.Ad @item.Soyad</td>
+                            </tr>
+                            <tr >
+                                <td style="background-color:whitesmoke">Telefon No</td>
+                                <td style="background-color:whitesmoke">@item.PhoneNumber</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <div class="tm-post-sidebar">                    
+                    <table class="table table-striped" style="width:320px;">
+                        <thead>
+                            <tr>
+                                <th style="background-color:whitesmoke">Ürün Özellikleri</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>İlan Ad</td>
+                                <td>@item.IlanAd</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:whitesmoke">Yıl</td>
+                                <td style="background-color:whitesmoke">@item.Yil</td>
+                            </tr>
+                            <tr>
+                                <td>Şehir</td>
+                                <td>@item.IlanSehir</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:whitesmoke">İlçe</td>
+                                <td style="background-color:whitesmoke">@item.IlanIlce</td>
+                            </tr>
+                            <tr>
+                                <td>Adres</td>
+                                <td>@item.AcikAdres</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr class="mb-3 tm-hr-primary">
+                <a class="d-block tm-mb-40 btn btn-success">Fiyat: @item.Fiyat &#8378</a>
+                <br>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a href="/IlanDetay/SikayetEt/@item.IlanId" class="btn btn-warning" style="width:160px;">
+                        <i class="fa-solid fa-triangle-exclamation" style="margin-right:5px;"></i>Şikayet Et
+                    </a>
+                    @if (TempData["Durum"] == null)
+                    {
+                        <a href="/IlanDetay/Begeni/@item.IlanId" class="btn btn-danger">
+                            <i class="fa-solid fa-heart" style="margin-right:5px;"></i>Beğen 
+                        </a>
+                    }
+                    @if (TempData["Durum"] == "Beğeniyi Kaldır")
+                    {
+                        <a href="/IlanDetay/BegeniKaldir/@item.IlanId" class="btn btn-danger">
+                            <i class="fa-solid fa-times" style="margin-right:5px;"></i>@TempData["Durum"]
+                        </a>
+                    }
+                    <br>
+                    <br>
+                    <a href="#" class="d-block tm-mb-40 btn btn-secondary">
+                        Satıcıyla İletişime Geç
+                    </a>
+                    <br>
+                    
+                }
+                else
+                {
+                    <span class="alert alert-warning" role="alert">Satıcıyla iletişime geçmek, ilanı beğenmek veya şikayet etmek için giriş yapmanız gerekmektedir.</span>
+                }
+                
+            </div>
+}
+        </div>
+    </div>
+    </div>
+</main>

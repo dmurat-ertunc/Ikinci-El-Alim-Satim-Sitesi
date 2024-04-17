@@ -1,0 +1,40 @@
+﻿@model SikayetViewModel
+@{
+    ViewData["Title"] = "SikayetEt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" asp-controller="IlanDetay" asp-action="SikayetEt">
+    <div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="margin-left:650px; margin-top:140px; border: solid lightgrey 1px; border-radius:5px; width:500px; height:700px;">
+        <div style="margin-top:60px;">
+        <i class="fa-solid fa-triangle-exclamation" style="margin-left:37%; color:darkorange; font-size:80px;"></i>
+            @if (TempData["Sikayet"] == "Sikayet Gönderildi")
+            {
+                <div class="alert alert-info" role="alert">
+                    @TempData["Sikayet"]
+                </div>
+            }
+            @if (TempData["Sikayet"] == "Sikayet Gönderilemedi. Boş yer bırakmayınız")
+            {
+                <div class="alert alert-danger" role="alert">
+                    @TempData["Sikayet"]
+                </div>
+            }
+            <div class="mb-3 mt-3 p-3">
+                <label for="email" class="form-label">Şikayet Başlığı</label>
+                <input type="text" class="form-control" id="email" name="SikayetBasligi">
+                <span class="text-danger" asp-validation-for="SikayetBasligi"></span>
+            </div>
+            <div class="mb-3 mt-3 p-3">
+                <label for="comment">Şikayet İçeriği</label>
+                <textarea class="form-control" rows="5" id="comment" name="SikayetIcerigi"></textarea>
+                <span class="text-danger" asp-validation-for="SikayetIcerigi"></span>
+            </div>
+            <div class="mb-3 mt-3 p-3">
+                <a href="/HomePage/Index" class="btn btn-primary">Ana Sayfaya Dön</a>
+                <button type="submit" class="btn btn-primary">Şikayeti Gönder</button>
+            </div>
+        </div>
+        
+    </div>
+</form>

@@ -1,0 +1,142 @@
+﻿@model KategorilerUrunlerIlanlar
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="display:flex">
+    <div class="kutu1">
+        <div class="accordion" id="accordionExample" style="background-color:whitesmoke; width:300px;">
+            <div class="accordion-item" style="background-color:whitesmoke">
+                <a href="#" class="list-group-item list-group-item-action" style="border:1px;background-color:whitesmoke ;border-top-style:inset; border-top-color:red; border-top-width:5px; text-align:center; font-size:large">
+                    Kategoriler
+                </a>
+                @foreach (var item in Model.kategorilers2)
+                {
+                    <h2 class="accordion-header" id="a-@item.Id">
+                        <a class="accordion-button" href="/HomePage/Index/@item.Id" data-bs-toggle="collapse" data-bs-target="#b-@item.Id" aria-expanded="true" aria-controls="b-@item.Id" style="background-color:whitesmoke; text-decoration:none; border:1px white solid">
+                            <i class="@item.IconClass" style="margin-right:5px;"></i>@item.KategoriAd
+                        </a>
+                    </h2>
+                }
+                @foreach (var item in Model.kategorilers3)
+                {
+                    <div id="b-@item.Id" class="accordion-collapse collapse" aria-labelledby="a-@item.Id" data-bs-parent="#accordionExample" style="background-color:whitesmoke">
+                        <div class="accordion-body">
+                            <a href="/Urunler/Index/@item.Id" style="text-decoration:none; text-align:center; font-size:18px;">Tüm @item.KategoriAd İlanları</a>
+                        </div>
+                    </div>
+                }
+                @foreach (var item in Model.urunlers)
+                {
+                    <div id="b-@item.KategorilerId" class="accordion-collapse collapse" aria-labelledby="a-@item.KategorilerId" data-bs-parent="#accordionExample" style="background-color:whitesmoke">
+                        <div class="accordion-body">
+                            <a href="/Ilanlar/Index/@item.Id" style="text-decoration:none">♦ @item.UrunCesiti</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="kutu2" style="margin-left:-15px;">
+        @foreach (var item in Model.kategorilers)
+        {
+
+            <h2 style="background-color:whitesmoke; margin-left:50px;">Tüm @item.KategoriAd Ürünleri</h2>
+
+        }
+        @foreach (var item in Model.ilanlars)
+        {
+            <div class="card" style="width:221px; height: 270px; margin-top: 5px; margin-left:50px; border-top-style:none; border-right-style:none; border-left-style:none; background-color:whitesmoke;">
+                <h4 class="card-title" style="background-color:whitesmoke">@item.IlanAd</h4>
+                <img class="card-img-top" src="@item.FotoUrl1" alt="Card image" style="width:221px; height:220px; object-fit: cover;    ">
+                <div class="card-body" style=" background-color:whitesmoke;">
+                    <a href="/IlanDetay/Index/@item.Id" class="btn btn-danger" style="border-radius:40px; width:150px; margin-left:20px;">
+                        &#8378;@item.Fiyat İlana Git
+                    </a>
+                </div>
+            </div>
+            <div class="card" style="width:221px; height: 270px; margin-top: 5px; margin-left:50px; border-top-style:none; border-right-style:none; border-left-style:none; background-color:whitesmoke;">
+                <h4 class="card-title" style="background-color:whitesmoke">@item.IlanAd</h4>
+                <img class="card-img-top" src="@item.FotoUrl1" alt="Card image" style="width:221px; height:220px; object-fit: cover;    ">
+                <div class="card-body" style=" background-color:whitesmoke;">
+                    <a href="/IlanDetay/Index/@item.Id" class="btn btn-danger" style="border-radius:40px; width:150px; margin-left:20px;">
+                        &#8378;@item.Fiyat İlana Git
+                    </a>
+                </div>
+            </div>
+            <div class="card" style="width:221px; height: 270px; margin-top: 5px; margin-left:50px; border-top-style:none; border-right-style:none; border-left-style:none; background-color:whitesmoke;">
+                <h4 class="card-title" style="background-color:whitesmoke">@item.IlanAd</h4>
+                <img class="card-img-top" src="@item.FotoUrl1" alt="Card image" style="width:221px; height:220px; object-fit: cover;    ">
+                <div class="card-body" style=" background-color:whitesmoke;">
+                    <a href="/IlanDetay/Index/@item.Id" class="btn btn-danger" style="border-radius:40px; width:150px; margin-left:20px;">
+                        &#8378;@item.Fiyat İlana Git
+                    </a>
+                </div>
+            </div>
+            <div class="card" style="width:221px; height: 270px; margin-top: 5px; margin-left:50px; border-top-style:none; border-right-style:none; border-left-style:none; background-color:whitesmoke;">
+                <h4 class="card-title" style="background-color:whitesmoke">@item.IlanAd</h4>
+                <img class="card-img-top" src="@item.FotoUrl1" alt="Card image" style="width:221px; height:220px; object-fit: cover;    ">
+                <div class="card-body" style=" background-color:whitesmoke;">
+                    <a href="/IlanDetay/Index/@item.Id" class="btn btn-danger" style="border-radius:40px; width:150px; margin-left:20px;">
+                        &#8378;@item.Fiyat İlana Git
+                    </a>
+                </div>
+            </div>
+            <div class="card" style="width:221px; height: 270px; margin-top: 5px; margin-left:50px; border-top-style:none; border-right-style:none; border-left-style:none; background-color:whitesmoke;">
+                <h4 class="card-title" style="background-color:whitesmoke">@item.IlanAd</h4>
+                <img class="card-img-top" src="@item.FotoUrl1" alt="Card image" style="width:221px; height:220px; object-fit: cover;    ">
+                <div class="card-body" style=" background-color:whitesmoke;">
+                    <a href="/IlanDetay/Index/@item.Id" class="btn btn-danger" style="border-radius:40px; width:150px; margin-left:20px;">
+                        &#8378;@item.Fiyat İlana Git
+                    </a>
+                </div>
+            </div>
+            <div class="card" style="width:221px; height: 270px; margin-top: 5px; margin-left:50px; border-top-style:none; border-right-style:none; border-left-style:none; background-color:whitesmoke;">
+                <h4 class="card-title" style="background-color:whitesmoke">@item.IlanAd</h4>
+                <img class="card-img-top" src="@item.FotoUrl1" alt="Card image" style="width:221px; height:220px; object-fit: cover;    ">
+                <div class="card-body" style=" background-color:whitesmoke;">
+                    <a href="/IlanDetay/Index/@item.Id" class="btn btn-danger" style="border-radius:40px; width:150px; margin-left:20px;">
+                        &#8378;@item.Fiyat İlana Git
+                    </a>
+                </div>
+            </div>
+            <div class="card" style="width:221px; height: 270px; margin-top: 5px; margin-left:50px; border-top-style:none; border-right-style:none; border-left-style:none; background-color:whitesmoke;">
+                <h4 class="card-title" style="background-color:whitesmoke">@item.IlanAd</h4>
+                <img class="card-img-top" src="@item.FotoUrl1" alt="Card image" style="width:221px; height:220px; object-fit: cover;    ">
+                <div class="card-body" style=" background-color:whitesmoke;">
+                    <a href="/IlanDetay/Index/@item.Id" class="btn btn-danger" style="border-radius:40px; width:150px; margin-left:20px;">
+                        &#8378;@item.Fiyat İlana Git
+                    </a>
+                </div>
+            </div>
+            <div class="card" style="width:221px; height: 270px; margin-top: 5px; margin-left:50px; border-top-style:none; border-right-style:none; border-left-style:none; background-color:whitesmoke;">
+                <h4 class="card-title" style="background-color:whitesmoke">@item.IlanAd</h4>
+                <img class="card-img-top" src="@item.FotoUrl1" alt="Card image" style="width:221px; height:220px; object-fit: cover;    ">
+                <div class="card-body" style=" background-color:whitesmoke;">
+                    <a href="/IlanDetay/Index/@item.Id" class="btn btn-danger" style="border-radius:40px; width:150px; margin-left:20px;">
+                        &#8378;@item.Fiyat İlana Git
+                    </a>
+                </div>
+            </div>
+            <div class="card" style="width:221px; height: 270px; margin-top: 5px; margin-left:50px; border-top-style:none; border-right-style:none; border-left-style:none; background-color:whitesmoke;">
+                <h4 class="card-title" style="background-color:whitesmoke">@item.IlanAd</h4>
+                <img class="card-img-top" src="@item.FotoUrl1" alt="Card image" style="width:221px; height:220px; object-fit: cover;    ">
+                <div class="card-body" style=" background-color:whitesmoke;">
+                    <a href="/IlanDetay/Index/@item.Id" class="btn btn-danger" style="border-radius:40px; width:150px; margin-left:20px;">
+                        &#8378;@item.Fiyat İlana Git
+                    </a>
+                </div>
+            </div>
+            <div class="card" style="width:221px; height: 270px; margin-top: 5px; margin-left:50px; border-top-style:none; border-right-style:none; border-left-style:none; background-color:whitesmoke;">
+                <h4 class="card-title" style="background-color:whitesmoke">@item.IlanAd</h4>
+                <img class="card-img-top" src="@item.FotoUrl1" alt="Card image" style="width:221px; height:220px; object-fit: cover;    ">
+                <div class="card-body" style=" background-color:whitesmoke;">
+                    <a href="/IlanDetay/Index/@item.Id" class="btn btn-danger" style="border-radius:40px; width:150px; margin-left:20px;">
+                        &#8378;@item.Fiyat İlana Git
+                    </a>
+                </div>
+            </div>
+            
+        }
+    </div>
+</div>

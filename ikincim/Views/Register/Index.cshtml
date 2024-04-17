@@ -1,0 +1,90 @@
+﻿@model UserViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="formUser1">
+<form asp-controller="Register" asp-action="Index" method="post" class="row g-3 needs-validation" itemid="registerForm" novalidate>
+        <div class="box">
+            <div class="container1">
+            <h2 style="margin-left:24px;">Kayıt Olma Ekranı</h2>
+            @if(TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-info" role="alert">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            <div class="alert alert-danger" asp-validation-summary="ModelOnly" role="alert">
+
+            </div>
+                <div class="input-field" style="margin-left:25px;">
+                    <input type="text" class="input" placeholder="Adınız" asp-for="Name" required>
+                    <i class="bx bx-user"></i>
+                    <span class="text-black-50" asp-validation-for="Name" style="margin-right:50px;"></span>
+                </div>
+                <div class="input-field" style="margin-left:25px;">
+                    <input type="text" class="input" placeholder="Soyadınız" asp-for="Surname" required>
+                    <i class="bx bx-user"></i>
+                    <span class="text-black-50" asp-validation-for="Surname" style="margin-right:50px;"></span>
+                </div>
+                <div class="input-field" style="margin-left:25px;">
+                    <input type="text" class="input" placeholder="Telefon Numaranız" asp-for="PhoneNumber" required>
+                    <i class="bx bx-user"></i>
+                    <span class="text-black-50" asp-validation-for="PhoneNumber" style="margin-right:50px;"></span>
+                </div>
+                <div class="input-field" style="margin-left:25px;">
+                    <input type="number" class="input" placeholder="Yaşınız" asp-for="Yas" required>
+                    <i class="bx bx-user"></i>
+                    <span class="text-black-50" asp-validation-for="Yas" style="margin-right:50px;"></span>
+                </div>
+                <div class="input-field" style="margin-left:25px;">
+                    <input type="email" class="input" placeholder="E-Postanız" asp-for="Email" required>
+                    <i class="bx bx-user"></i>
+                    <span class="text-black-50" asp-validation-for="Email" style="margin-right:50px;"></span>
+                </div>
+                <div class="input-field" style="margin-left:25px;">
+                    <input type="text" class="input" placeholder="Kullanıcı Adınız" asp-for="UserName" required>
+                    <i class="bx bx-user"></i>
+                    <span class="text-black-50" asp-validation-for="UserName" style="margin-right:50px;"></span>
+                </div>
+                <div class="input-field" style="margin-left:25px;">
+                    <input type="password" class="input" placeholder="Şifreniz" asp-for="Password" required>
+                    <i class="bx bx-user"></i>
+                    <span class="text-black-50" asp-validation-for="Password" style="margin-right:50px;"></span>
+                </div>
+                <div class="input-field">
+                    <button type="submit" class="submit">Kayıt Ol</button>
+                </div>
+            </div>
+        </div>
+</form>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", yukle );
+    function yukle(e) {
+        document.querySelectorAll(".input").textContent = "";
+        e.preventDefault();
+    }
+</script>
+
+@* <script>
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script> *@

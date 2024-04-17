@@ -1,0 +1,1155 @@
+﻿@model KategorilerIlanlarUrunlerUser
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="margin-top:30px; margin-left:450px; background-color:#fff; border:1px whitesmoke inset border-radius:15px; width:1010px;">
+        <h2 style="text-align:center;">İlan Verme Sayfası</h2>
+<form asp-controller="IlanVer" asp-action="Index" method="post" enctype="multipart/form-data">
+        <div style="margin-left:625px;">
+            <i class="fa-solid fa-user-tie" style="color:red; margin-left:-500px; font-size:40px;"></i>
+        </div>
+        <div style="float:left; justify-content:flex-start; margin-left:20px; margin-top:20px; padding:10px; border:1px whitesmoke solid; border-top-color:red; border-top-width:5px;">
+            <div class="mb-3 input-field">
+                <label class="form-label">Kullanıcı Adı</label>
+                <input type="text" class="form-control input" value="@User.Identity.Name" readonly>
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">İlanın Adı</label>
+                <input type="text" class="form-control input" asp-for="IlanAd">
+                <span class="text-black text-black-50" asp-validation-for="IlanAd"></span>
+            </div>
+            <div class="mb-3 input-field">
+                <label for="comment">İlan Açıklaması</label>
+                <textarea class="form-control input" rows="15" asp-for="Aciklama"></textarea>
+                <span class="text-black text-black-50" asp-validation-for="Aciklama"></span>
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">Ürünün Yılı</label>
+                <input type="number" class="form-control input" asp-for="Yil">
+                <span class="text-black text-black-50" asp-validation-for="Yil"></span>
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">Fiyat</label>
+                <input type="number" class="form-control input" asp-for="Fiyat">
+                <span class="text-black text-black-50" asp-validation-for="Fiyat"></span>
+            </div>
+        </div>
+        <div style="margin-top:-40px;">
+            <i class="fa-solid fa-layer-group" style="color:green; font-size:40px; margin-left:150px;"></i>
+        </div>
+        <div style="float:left; justify-content:flex-end; margin-left:20px; margin-top:20px; padding:10px; border:1px whitesmoke solid; border-top-color:green; border-top-width:5px;">
+            <div class="mb-3 input-field">
+                <label class="form-label">Kategori Seçiniz</label>
+                <select id="kategori-select" class="form-select input" asp-for="KategriId">
+                    <option selected>Kategori Seçiniz</option>
+                    <span class="text-black text-black-50" asp-validation-for="KategoriAd"></span>
+                    @foreach (var item in Model.kategorilers)
+                    {
+                        <option value="@item.Id" slug="@item.Id">@item.KategoriAd</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">Ürün Çeşiti Seçiniz</label>
+                <select id="urun-select" class="form-select input" asp-for="UrunId" required>
+                    <option selected>Ürün Çeşiti Seçiniz</option>
+                    <span class="text-black text-black-50" asp-validation-for="UrunCesiti"></span>
+                    @foreach (var item in Model.urunlers)
+                    {
+                        <option value="@item.Id" kategori-slug="@item.KategorilerId">@item.UrunCesiti</option>
+                    }
+                </select>
+
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">1.Fotoğrafı Seç</label>
+                <input type="file" name="files" class="form-control " rows="5" asp-for="FotoUrl1" style="background-color:#f5f5f5">
+                <span class="text-black text-black-50" asp-validation-for="FotoUrl1"></span>
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">2.Fotoğrafı Seç</label>
+                <input type="file" name="files" class="form-control " rows="5" asp-for="FotoUrl2" style="background-color:#f5f5f5"></input>
+                <span class="text-black text-black-50" asp-validation-for="FotoUrl2"></span>
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">3.Fotoğrafı Seç</label>
+                <input type="file" name="files" class="form-control " rows="5" asp-for="FotoUrl3" style="background-color:#f5f5f5"></input>
+                <span class="text-black text-black-50" asp-validation-for="FotoUrl3"></span>
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">4.Fotoğrafı Seç</label>
+                <input type="file" name="files" class="form-control " rows="5" asp-for="FotoUrl4" style="background-color:#f5f5f5"></input>
+                <span class="text-black text-black-50" asp-validation-for="FotoUrl4"></span>
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">5.Fotoğrafı Seç</label>
+                <input type="file" name="files" class="form-control" rows="5" asp-for="FotoUrl5" style="background-color:#f5f5f5"></input>
+                <span class="text-black text-black-50" asp-validation-for="FotoUrl5"></span>
+            </div>
+
+        </div>
+        <div style="margin-top:-40px;">
+            <i class="fa-solid fa-location-dot" style="color:mediumpurple; font-size:40px; margin-left:135px;"></i>
+        </div>
+        <div style="float:left; justify-content:flex-end; margin-left:20px; margin-top:20px; padding:10px; margin-right:30px; border:1px whitesmoke solid; border-top-color:mediumpurple; border-top-width:5px;" class="input-field">
+            <label class="form-label">İl Seçiniz</label>
+            <select id="il-select" class="form-select input" asp-for="IlanSehir">
+                <option selected>İl Seçiniz</option>
+                <span class="text-black text-black-50" asp-validation-for="IlanSehir"></span>
+                <option value="Adana" slug="adana">Adana</option>
+                <option value="Adiyaman" slug="adiyaman">Adıyaman</option>
+                <option value="Afyonkarahisar" slug="afyonkarahisar">Afyonkarahisar</option>
+                <option value="Agri" slug="agri">Ağrı</option>
+                <option value="Amasya" slug="amasya">Amasya</option>
+                <option value="Ankara" slug="ankara">Ankara</option>
+                <option value="Antalya" slug="antalya">Antalya</option>
+                <option value="Artvin" slug="artvin">Artvin</option>
+                <option value="Aydin" slug="aydin">Aydın</option>
+                <option value="Balikesir" slug="balikesir">Balıkesir</option>
+                <option value="Bilecik" slug="bilecik">Bilecik</option>
+                <option value="Bingol" slug="bingol">Bingöl</option>
+                <option value="Bitlis" slug="bitlis">Bitlis</option>
+                <option value="Bolu" slug="bolu">Bolu</option>
+                <option value="Burdur" slug="burdur">Burdur</option>
+                <option value="Bursa" slug="bursa">Bursa</option>
+                <option value="Çanakkale" slug="canakkale">Çanakkale</option>
+                <option value="Çankiri" slug="cankiri">Çankırı</option>
+                <option value="Çorum" slug="corum">Çorum</option>
+                <option value="Denizli" slug="denizli">Denizli</option>
+                <option value="Diyarbakır" slug="diyarbakir">Diyarbakır</option>
+                <option value="Edirne" slug="edirne">Edirne</option>
+                <option value="Elazığ" slug="elazig">Elazığ</option>
+                <option value="Erzincan" slug="erzincan">Erzincan</option>
+                <option value="Erzurum" slug="erzurum">Erzurum</option>
+                <option value="Eskisehir" slug="eskisehir">Eskişehir</option>
+                <option value="Gaziantep" slug="gaziantep">Gaziantep</option>
+                <option value="Giresun" slug="giresun">Giresun</option>
+                <option value="Gumushane" slug="gumushane">Gümüşhane</option>
+                <option value="Hakkari" slug="hakkari">Hakkâri</option>
+                <option value="Hatay" slug="hatay">Hatay</option>
+                <option value="Isparta" slug="isparta">Isparta</option>
+                <option value="Mersin" slug="mersin">Mersin</option>
+                <option value="İstanbul" slug="istanbul">İstanbul</option>
+                <option value="İzmir" slug="izmir">İzmir</option>
+                <option value="Kars" slug="kars">Kars</option>
+                <option value="Kastamonu" slug="kastamonu">Kastamonu</option>
+                <option value="Kayseri" slug="kayseri">Kayseri</option>
+                <option value="Kirklareli" slug="kirklareli">Kırklareli</option>
+                <option value="Kirşehir" slug="kirsehir">Kırşehir</option>
+                <option value="Kocaeli" slug="kocaeli">Kocaeli</option>
+                <option value="Konya" slug="konya">Konya</option>
+                <option value="Kütahya" slug="kutahya">Kütahya</option>
+                <option value="Malatya" slug="malatya">Malatya</option>
+                <option value="Manisa" slug="manisa">Manisa</option>
+                <option value="Kahramanmaras" slug="kahramanmaras">Kahramanmaraş</option>
+                <option value="Mardin" slug="mardin">Mardin</option>
+                <option value="Muğla" slug="mugla">Muğla</option>
+                <option value="Muş" slug="mus">Muş</option>
+                <option value="Nevşehir" slug="nevsehir">Nevşehir</option>
+                <option value="Niğde" slug="nigde">Niğde</option>
+                <option value="Ordu" slug="ordu">Ordu</option>
+                <option value="Rize" slug="rize">Rize</option>
+                <option value="Sakarya" slug="sakarya">Sakarya</option>
+                <option value="Samsun" slug="samsun">Samsun</option>
+                <option value="Siirt" slug="siirt">Siirt</option>
+                <option value="Sinop" slug="sinop">Sinop</option>
+                <option value="Sivas" slug="sivas">Sivas</option>
+                <option value="Tekirdağ" slug="tekirdag">Tekirdağ</option>
+                <option value="Tokat" slug="tokat">Tokat</option>
+                <option value="Trabzon" slug="trabzon">Trabzon</option>
+                <option value="Tunceli" slug="tunceli">Tunceli</option>
+                <option value="Şanlıurfa" slug="sanliurfa">Şanlıurfa</option>
+                <option value="Uşak" slug="usak">Uşak</option>
+                <option value="Van" slug="van">Van</option>
+                <option value="Yalova" slug="yalova">Yalova</option>
+                <option value="Yozgat" slug="yozgat">Yozgat</option>
+                <option value="Zonguldak" slug="zonguldak">Zonguldak</option>
+                <option value="Aksaray" slug="aksaray">Aksaray</option>
+                <option value="Bayburt" slug="bayburt">Bayburt</option>
+                <option value="Karaman" slug="karaman">Karaman</option>
+                <option value="Kırıkkale" slug="kirikkale">Kırıkkale</option>
+                <option value="Batman" slug="batman">Batman</option>
+                <option value="Şırnak" slug="sirnak">Şırnak</option>
+                <option value="Bartın" slug="bartin">Bartın</option>
+                <option value="Ardahan" slug="ardahan">Ardahan</option>
+                <option value="Iğdır" slug="igdir">Iğdır</option>
+                <option value="Yalova" slug="yalova">Yalova</option>
+                <option value="Karabük" slug="karabuk">Karabük</option>
+                <option value="Kilis" slug="kilis">Kilis</option>
+                <option value="Osmaniye" slug="osmaniye">Osmaniye</option>
+                <option value="Düzce" slug="duzce">Düzce</option>
+            </select>
+            <div class="mb-3 input-field">
+                <label class="form-label">İlçe Seçiniz</label>
+                <select id="ilce-select" class="form-select input" asp-for="IlanIlce">
+                    <option selected>İlçe Seçiniz</option>
+                    <span class="text-black text-black-50" asp-validation-for="IlanIlce"></span>
+                    <option value="Adana Merkez" il-slug="adana">Adana Merkez</option>
+                    <option value="Aladağ" il-slug="adana">Aladağ</option>
+                    <option value="Ceyhan" il-slug="adana">Ceyhan</option>
+                    <option value="Çukurova" il-slug="adana">Çukurova</option>
+                    <option value="Feke" il-slug="adana">Feke</option>
+                    <option value="İmamoğlu" il-slug="adana">İmamoğlu</option>
+                    <option value="Karaisalı" il-slug="adana">Karaisalı</option>
+                    <option value="Karataş" il-slug="adana">Karataş</option>
+                    <option value="Kozan" il-slug="adana">Kozan</option>
+                    <option value="Pozantı" il-slug="adana">Pozantı</option>
+                    <option value="Saimbeyli" il-slug="adana">Saimbeyli</option>
+                    <option value="Sarıçam" il-slug="adana">Sarıçam</option>
+                    <option value="Seyhan" il-slug="adana">Seyhan</option>
+                    <option value="Tufanbeyli" il-slug="adana">Tufanbeyli</option>
+                    <option value="Yumurtalık" il-slug="adana">Yumurtalık</option>
+                    <option value="Yüreğir" il-slug="adana">Yüreğir</option>
+                    <option value="Adıyaman Merkez" il-slug="adiyaman">Adıyaman Merkez</option>
+                    <option value="Besni" il-slug="adiyaman">Besni</option>
+                    <option value="Çelikhan" il-slug="adiyaman">Çelikhan</option>
+                    <option value="Gerger" il-slug="adiyaman">Gerger</option>
+                    <option value="Gölbaşı" il-slug="adiyaman">Gölbaşı</option>
+                    <option value="Kahta" il-slug="adiyaman">Kahta</option>
+                    <option value="adiyaman_ilce_7" il-slug="adiyaman">Samsat</option>
+                    <option value="Sincik" il-slug="adiyaman">Sincik</option>
+                    <option value="Tut" il-slug="adiyaman">Tut</option>
+                    <option value="Afyonkarahisar Merkez" il-slug="afyonkarahisar">Afyonkarahisar Merkez</option>
+                    <option value="Başmakçı" il-slug="afyonkarahisar">Başmakçı</option>
+                    <option value="Bayat" il-slug="afyonkarahisar">Bayat</option>
+                    <option value="Bolvadin" il-slug="afyonkarahisar">Bolvadin</option>
+                    <option value="Çay" il-slug="afyonkarahisar">Çay</option>
+                    <option value="Dazkırı" il-slug="afyonkarahisar">Çobanlar</option>
+                    <option value="afyon_ilce_7" il-slug="afyonkarahisar">Dazkırı</option>
+                    <option value="Dinar" il-slug="afyonkarahisar">Dinar</option>
+                    <option value="Emirdağ" il-slug="afyonkarahisar">Emirdağ</option>
+                    <option value="Evciler" il-slug="afyonkarahisar">Evciler</option>
+                    <option value="Hocalar" il-slug="afyonkarahisar">Hocalar</option>
+                    <option value="İhsaniye" il-slug="afyonkarahisar">İhsaniye</option>
+                    <option value="İscehisar" il-slug="afyonkarahisar">İscehisar</option>
+                    <option value="Kızılören" il-slug="afyonkarahisar">Kızılören</option>
+                    <option value="Sandıklı" il-slug="afyonkarahisar">Sandıklı</option>
+                    <option value="Sinanpaşa" il-slug="afyonkarahisar">Sinanpaşa</option>
+                    <option value="Sultandağı" il-slug="afyonkarahisar">Sultandağı</option>
+                    <option value="Şuhut" il-slug="afyonkarahisar">Şuhut</option>
+                    <option value="Ağrı Merkez" il-slug="agri">Ağrı Merkez</option>
+                    <option value="Diyadin" il-slug="agri">Diyadin</option>
+                    <option value="Doğubayazıt" il-slug="agri">Doğubayazıt</option>
+                    <option value="Eleşkirt" il-slug="agri">Eleşkirt</option>
+                    <option value="Hamur" il-slug="agri">Hamur</option>
+                    <option value="Patnos" il-slug="agri">Patnos</option>
+                    <option value="Taşlıçay" il-slug="agri">Taşlıçay</option>
+                    <option value="Tutak" il-slug="agri">Tutak</option>
+                    <option value="Amasya Merkez" il-slug="amasya">Amasya Merkez</option>
+                    <option value="Göynücek" il-slug="amasya">Göynücek</option>
+                    <option value="Gümüşhacıköy" il-slug="amasya">Gümüşhacıköy</option>
+                    <option value="Hamamözü" il-slug="amasya">Hamamözü</option>
+                    <option value="Merzifon" il-slug="amasya">Merzifon</option>
+                    <option value="Suluova" il-slug="amasya">Suluova</option>
+                    <option value="Akyurt" il-slug="amasya">Taşova</option>
+                    <option value="ankara_ilce_1" il-slug="ankara">Akyurt</option>
+                    <option value="Altındağ" il-slug="ankara">Altındağ</option>
+                    <option value="Ayaş" il-slug="ankara">Ayaş</option>
+                    <option value="Bala" il-slug="ankara">Bala</option>
+                    <option value="Beypazarı" il-slug="ankara">Beypazarı</option>
+                    <option value="Çamlıdere" il-slug="ankara">Çamlıdere</option>
+                    <option value="Çankaya" il-slug="ankara">Çankaya</option>
+                    <option value="Çubuk" il-slug="ankara">Çubuk</option>
+                    <option value="Elmadağ" il-slug="ankara">Elmadağ</option>
+                    <option value="Etimesgut" il-slug="ankara">Etimesgut</option>
+                    <option value="Evren" il-slug="ankara">Evren</option>
+                    <option value="Gölbaşı" il-slug="ankara">Gölbaşı</option>
+                    <option value="Güdül" il-slug="ankara">Güdül</option>
+                    <option value="Haymana" il-slug="ankara">Haymana</option>
+                    <option value="Kalecik" il-slug="ankara">Kalecik</option>
+                    <option value="Kazan" il-slug="ankara">Kazan</option>
+                    <option value="Keçiören" il-slug="ankara">Keçiören</option>
+                    <option value="Kızılcahamam" il-slug="ankara">Kızılcahamam</option>
+                    <option value="Mamak" il-slug="ankara">Mamak</option>
+                    <option value="Nallıhan" il-slug="ankara">Nallıhan</option>
+                    <option value="Polatlı" il-slug="ankara">Polatlı</option>
+                    <option value="Pursaklar" il-slug="ankara">Pursaklar</option>
+                    <option value="Sincan" il-slug="ankara">Sereflikochisar</option>
+                    <option value="ankara_ilce_24" il-slug="ankara">Sincan</option>
+                    <option value="Şereflikoçhisar" il-slug="ankara">Şereflikoçhisar</option>
+                    <option value="Yenimahalle" il-slug="ankara">Yenimahalle</option>
+                    <option value="Akseki" il-slug="antalya">Akseki</option>
+                    <option value="Aksu" il-slug="antalya">Aksu</option>
+                    <option value="Alanya" il-slug="antalya">Alanya</option>
+                    <option value="Döşemealtı" il-slug="antalya">Döşemealtı</option>
+                    <option value="Elmalı" il-slug="antalya">Elmalı</option>
+                    <option value="Finike" il-slug="antalya">Finike</option>
+                    <option value="Gazipaşa" il-slug="antalya">Gazipaşa</option>
+                    <option value="Gündoğmuş" il-slug="antalya">Gündoğmuş</option>
+                    <option value="İbradi" il-slug="antalya">İbradi</option>
+                    <option value="Kale" il-slug="antalya">Kale</option>
+                    <option value="Kaş" il-slug="antalya">Kaş</option>
+                    <option value="Kemer" il-slug="antalya">Kemer</option>
+                    <option value="Kepez" il-slug="antalya">Kepez</option>
+                    <option value="Konyaaltı" il-slug="antalya">Konyaaltı</option>
+                    <option value="Korkuteli" il-slug="antalya">Korkuteli</option>
+                    <option value="Kumluca" il-slug="antalya">Kumluca</option>
+                    <option value="Manavgat" il-slug="antalya">Manavgat</option>
+                    <option value="Muratpaşa" il-slug="antalya">Muratpaşa</option>
+                    <option value="Serik" il-slug="antalya">Serik</option>
+                    <option value="Ardanuç" il-slug="artvin">Ardanuç</option>
+                    <option value="Arhavi" il-slug="artvin">Arhavi</option>
+                    <option value="Borçka" il-slug="artvin">Borçka</option>
+                    <option value="Hopa" il-slug="artvin">Hopa</option>
+                    <option value="Murgul" il-slug="artvin">Murgul</option>
+                    <option value="Şavşat" il-slug="artvin">Şavşat</option>
+                    <option value="Yusufeli" il-slug="artvin">Yusufeli</option>
+                    <option value="Bozdoğan" il-slug="aydin">Bozdoğan</option>
+                    <option value="Buharkent" il-slug="aydin">Buharkent</option>
+                    <option value="Çine" il-slug="aydin">Çine</option>
+                    <option value="Didim" il-slug="aydin">Didim</option>
+                    <option value="Efeler" il-slug="aydin">Efeler</option>
+                    <option value="Germencik" il-slug="aydin">Germencik</option>
+                    <option value="İncirliova" il-slug="aydin">İncirliova</option>
+                    <option value="Karacasu" il-slug="aydin">Karacasu</option>
+                    <option value="Karpuzlu" il-slug="aydin">Karpuzlu</option>
+                    <option value="Koçarlı" il-slug="aydin">Koçarlı</option>
+                    <option value="Köşk" il-slug="aydin">Köşk</option>
+                    <option value="Kuşadası" il-slug="aydin">Kuşadası</option>
+                    <option value="Kuyucak" il-slug="aydin">Kuyucak</option>
+                    <option value="Nazilli" il-slug="aydin">Nazilli</option>
+                    <option value="Söke" il-slug="aydin">Söke</option>
+                    <option value="Sultanhisar" il-slug="aydin">Sultanhisar</option>
+                    <option value="Yenipazar" il-slug="aydin">Yenipazar</option>
+                    <option value="Altıeylül" il-slug="balikesir">Altıeylül</option>
+                    <option value="Ayvalık" il-slug="balikesir">Ayvalık</option>
+                    <option value="Balya" il-slug="balikesir">Balya</option>
+                    <option value="Bandırma" il-slug="balikesir">Bandırma</option>
+                    <option value="Bigadiç" il-slug="balikesir">Bigadiç</option>
+                    <option value="Burhaniye" il-slug="balikesir">Burhaniye</option>
+                    <option value="Dursunbey" il-slug="balikesir">Dursunbey</option>
+                    <option value="Edremit" il-slug="balikesir">Edremit</option>
+                    <option value="Erdek" il-slug="balikesir">Erdek</option>
+                    <option value="Gömeç" il-slug="balikesir">Gömeç</option>
+                    <option value="Gönen" il-slug="balikesir">Gönen</option>
+                    <option value="Havran" il-slug="balikesir">Havran</option>
+                    <option value="İvrindi" il-slug="balikesir">İvrindi</option>
+                    <option value="Karesi" il-slug="balikesir">Karesi</option>
+                    <option value="Kepsut" il-slug="balikesir">Kepsut</option>
+                    <option value="Manyas" il-slug="balikesir">Manyas</option>
+                    <option value="Marmara" il-slug="balikesir">Marmara</option>
+                    <option value="Savaştepe" il-slug="balikesir">Savaştepe</option>
+                    <option value="Sındırgı" il-slug="balikesir">Sındırgı</option>
+                    <option value="Susurluk" il-slug="balikesir">Susurluk</option>
+                    <option value="Bilecik Merkez" il-slug="bilecik">Bilecik Merkez</option>
+                    <option value="Bozüyük" il-slug="bilecik">Bozüyük</option>
+                    <option value="Gölpazarı" il-slug="bilecik">Gölpazarı</option>
+                    <option value="İnhisar" il-slug="bilecik">İnhisar</option>
+                    <option value="Osmaneli" il-slug="bilecik">Osmaneli</option>
+                    <option value="Pazaryeri" il-slug="bilecik">Pazaryeri</option>
+                    <option value="Söğüt" il-slug="bilecik">Söğüt</option>
+                    <option value="Yenipazar" il-slug="bilecik">Yenipazar</option>
+                    <option value="Adaklı" il-slug="bingol">Adaklı</option>
+                    <option value="Genç" il-slug="bingol">Genç</option>
+                    <option value="Karlıova" il-slug="bingol">Karlıova</option>
+                    <option value="Kiğı" il-slug="bingol">Kiğı</option>
+                    <option value="Merkez" il-slug="bingol">Merkez</option>
+                    <option value="Solhan" il-slug="bingol">Solhan</option>
+                    <option value="Yayladere" il-slug="bingol">Yayladere</option>
+                    <option value="Yedisu" il-slug="bingol">Yedisu</option>
+                    <option value="Adilcevaz" il-slug="bitlis">Adilcevaz</option>
+                    <option value="Ahlat" il-slug="bitlis">Ahlat</option>
+                    <option value="Güroymak" il-slug="bitlis">Güroymak</option>
+                    <option value="Hizan" il-slug="bitlis">Hizan</option>
+                    <option value="Merkez" il-slug="bitlis">Merkez</option>
+                    <option value="Mutki" il-slug="bitlis">Mutki</option>
+                    <option value="Tatvan" il-slug="bitlis">Tatvan</option>
+                    <option value="Dörtdivan" il-slug="bolu">Dörtdivan</option>
+                    <option value="Gerede" il-slug="bolu">Gerede</option>
+                    <option value="Göynük" il-slug="bolu">Göynük</option>
+                    <option value="Kıbrıscık" il-slug="bolu">Kıbrıscık</option>
+                    <option value="Mengen" il-slug="bolu">Mengen</option>
+                    <option value="Merkez" il-slug="bolu">Merkez</option>
+                    <option value="Mudurnu" il-slug="bolu">Mudurnu</option>
+                    <option value="Seben" il-slug="bolu">Seben</option>
+                    <option value="Yeniçağa" il-slug="bolu">Yeniçağa</option>
+                    <option value="Ağlasun" il-slug="burdur">Ağlasun</option>
+                    <option value="Altınyayla" il-slug="burdur">Altınyayla</option>
+                    <option value="Altınyayla" il-slug="burdur">Altınyayla</option>
+                    <option value="Çavdır" il-slug="burdur">Çavdır</option>
+                    <option value="Çeltikçi" il-slug="burdur">Çeltikçi</option>
+                    <option value="Gölhisar" il-slug="burdur">Gölhisar</option>
+                    <option value="Karamanlı" il-slug="burdur">Karamanlı</option>
+                    <option value="Kemer" il-slug="burdur">Kemer</option>
+                    <option value="Merkez" il-slug="burdur">Merkez</option>
+                    <option value="Tefenni" il-slug="burdur">Tefenni</option>
+                    <option value="Yeşilova" il-slug="burdur">Yeşilova</option>
+                    <option value="Büyükorhan" il-slug="bursa">Büyükorhan</option>
+                    <option value="Gemlik" il-slug="bursa">Gemlik</option>
+                    <option value="Gürsu" il-slug="bursa">Gürsu</option>
+                    <option value="Harmancık" il-slug="bursa">Harmancık</option>
+                    <option value="İnegöl" il-slug="bursa">İnegöl</option>
+                    <option value="İznik" il-slug="bursa">İznik</option>
+                    <option value="Karacabey" il-slug="bursa">Karacabey</option>
+                    <option value="Keles" il-slug="bursa">Keles</option>
+                    <option value="Kestel" il-slug="bursa">Kestel</option>
+                    <option value="Mudanya" il-slug="bursa">Mudanya</option>
+                    <option value="Mustafakemalpaşa" il-slug="bursa">Mustafakemalpaşa</option>
+                    <option value="Nilüfer" il-slug="bursa">Nilüfer</option>
+                    <option value="Orhaneli" il-slug="bursa">Orhaneli</option>
+                    <option value="Orhangazi" il-slug="bursa">Orhangazi</option>
+                    <option value="Osmangazi" il-slug="bursa">Osmangazi</option>
+                    <option value="Yenişehir" il-slug="bursa">Yenişehir</option>
+                    <option value="Yıldırım" il-slug="bursa">Yıldırım</option>
+                    <option value="Ayvacık" il-slug="canakkale">Ayvacık</option>
+                    <option value="Bayramiç" il-slug="canakkale">Bayramiç</option>
+                    <option value="Biga" il-slug="canakkale">Biga</option>
+                    <option value="Bozcaada" il-slug="canakkale">Bozcaada</option>
+                    <option value="Çan" il-slug="canakkale">Çan</option>
+                    <option value="Eceabat" il-slug="canakkale">Eceabat</option>
+                    <option value="Ezine" il-slug="canakkale">Ezine</option>
+                    <option value="Gelibolu" il-slug="canakkale">Gelibolu</option>
+                    <option value="Gökçeada" il-slug="canakkale">Gökçeada</option>
+                    <option value="Lapseki" il-slug="canakkale">Lapseki</option>
+                    <option value="Merkez" il-slug="canakkale">Merkez</option>
+                    <option value="Yenice" il-slug="canakkale">Yenice</option>
+                    <option value="Atkaracalar" il-slug="cankiri">Atkaracalar</option>
+                    <option value="Bayramören" il-slug="cankiri">Bayramören</option>
+                    <option value="Çerkeş" il-slug="cankiri">Çerkeş</option>
+                    <option value="Eldivan" il-slug="cankiri">Eldivan</option>
+                    <option value="Ilgaz" il-slug="cankiri">Ilgaz</option>
+                    <option value="Kızılırmak" il-slug="cankiri">Kızılırmak</option>
+                    <option value="Korgun" il-slug="cankiri">Korgun</option>
+                    <option value="Kurşunlu" il-slug="cankiri">Kurşunlu</option>
+                    <option value="Orta" il-slug="cankiri">Orta</option>
+                    <option value="Şabanözü" il-slug="cankiri">Şabanözü</option>
+                    <option value="Yapraklı" il-slug="cankiri">Yapraklı</option>
+                    <option value="Alaca" il-slug="corum">Alaca</option>
+                    <option value="Bayat" il-slug="corum">Bayat</option>
+                    <option value="Boğazkale" il-slug="corum">Boğazkale</option>
+                    <option value="Dodurga" il-slug="corum">Dodurga</option>
+                    <option value="İskilip" il-slug="corum">İskilip</option>
+                    <option value="Kargı" il-slug="corum">Kargı</option>
+                    <option value="Laçin" il-slug="corum">Laçin</option>
+                    <option value="Mecitözü" il-slug="corum">Mecitözü</option>
+                    <option value="Oğuzlar" il-slug="corum">Oğuzlar</option>
+                    <option value="Ortaköy" il-slug="corum">Ortaköy</option>
+                    <option value="Osmancık" il-slug="corum">Osmancık</option>
+                    <option value="Sungurlu" il-slug="corum">Sungurlu</option>
+                    <option value="Uğurludağ" il-slug="corum">Uğurludağ</option>
+                    <option value="Acıpayam" il-slug="denizli">Acıpayam</option>
+                    <option value="Babadağ" il-slug="denizli">Babadağ</option>
+                    <option value="Baklan" il-slug="denizli">Baklan</option>
+                    <option value="Bekilli" il-slug="denizli">Bekilli</option>
+                    <option value="Beyağaç" il-slug="denizli">Beyağaç</option>
+                    <option value="Bozkurt" il-slug="denizli">Bozkurt</option>
+                    <option value="Buldan" il-slug="denizli">Buldan</option>
+                    <option value="Çal" il-slug="denizli">Çal</option>
+                    <option value="Çameli" il-slug="denizli">Çameli</option>
+                    <option value="Çardak" il-slug="denizli">Çardak</option>
+                    <option value="Çivril" il-slug="denizli">Çivril</option>
+                    <option value="Güney" il-slug="denizli">Güney</option>
+                    <option value="Honaz" il-slug="denizli">Honaz</option>
+                    <option value="Kale" il-slug="denizli">Kale</option>
+                    <option value="Merkezefendi" il-slug="denizli">Merkezefendi</option>
+                    <option value="Pamukkale" il-slug="denizli">Pamukkale</option>
+                    <option value="Sarayköy" il-slug="denizli">Sarayköy</option>
+                    <option value="Serinhisar" il-slug="denizli">Serinhisar</option>
+                    <option value="Tavas" il-slug="denizli">Tavas</option>
+                    <option value="Bağlar" il-slug="diyarbakir">Bağlar</option>
+                    <option value="Bismil" il-slug="diyarbakir">Bismil</option>
+                    <option value="Çermik" il-slug="diyarbakir">Çermik</option>
+                    <option value="Çınar" il-slug="diyarbakir">Çınar</option>
+                    <option value="Çüngüş" il-slug="diyarbakir">Çüngüş</option>
+                    <option value="Dicle" il-slug="diyarbakir">Dicle</option>
+                    <option value="Eğil" il-slug="diyarbakir">Eğil</option>
+                    <option value="Ergani" il-slug="diyarbakir">Ergani</option>
+                    <option value="Hani" il-slug="diyarbakir">Hani</option>
+                    <option value="Hazro" il-slug="diyarbakir">Hazro</option>
+                    <option value="Kayapınar" il-slug="diyarbakir">Kayapınar</option>
+                    <option value="Kocaköy" il-slug="diyarbakir">Kocaköy</option>
+                    <option value="Kulp" il-slug="diyarbakir">Kulp</option>
+                    <option value="Lice" il-slug="diyarbakir">Lice</option>
+                    <option value="Silvan" il-slug="diyarbakir">Silvan</option>
+                    <option value="Sur" il-slug="diyarbakir">Sur</option>
+                    <option value="Yenişehir" il-slug="diyarbakir">Yenişehir</option>
+                    <option value="Edirne Merkez" il-slug="edirne">Edirne Merkez</option>
+                    <option value="Enez" il-slug="edirne">Enez</option>
+                    <option value="Havsa" il-slug="edirne">Havsa</option>
+                    <option value="İpsala" il-slug="edirne">İpsala</option>
+                    <option value="Keşan" il-slug="edirne">Keşan</option>
+                    <option value="Lalapaşa" il-slug="edirne">Lalapaşa</option>
+                    <option value="Meriç" il-slug="edirne">Meriç</option>
+                    <option value="Süloğlu" il-slug="edirne">Süloğlu</option>
+                    <option value="Uzunköprü" il-slug="edirne">Uzunköprü</option>
+                    <option value="Ağın" il-slug="elazig">Ağın</option>
+                    <option value="Alacakaya" il-slug="elazig">Alacakaya</option>
+                    <option value="Arıcak" il-slug="elazig">Arıcak</option>
+                    <option value="Baskil" il-slug="elazig">Baskil</option>
+                    <option value="Karakoçan" il-slug="elazig">Karakoçan</option>
+                    <option value="Keban" il-slug="elazig">Keban</option>
+                    <option value="Kovancılar" il-slug="elazig">Kovancılar</option>
+                    <option value="Maden" il-slug="elazig">Maden</option>
+                    <option value="Palu" il-slug="elazig">Palu</option>
+                    <option value="Sivrice" il-slug="elazig">Sivrice</option>
+                    <option value="Çayırlı" il-slug="erzincan">Çayırlı</option>
+                    <option value="İliç" il-slug="erzincan">İliç</option>
+                    <option value="Kemah" il-slug="erzincan">Kemah</option>
+                    <option value="Kemaliye (Eğin)" il-slug="erzincan">Kemaliye (Eğin)</option>
+                    <option value="Otlukbeli" il-slug="erzincan">Otlukbeli</option>
+                    <option value="Refahiye" il-slug="erzincan">Refahiye</option>
+                    <option value="Tercan" il-slug="erzincan">Tercan</option>
+                    <option value="Üzümlü" il-slug="erzincan">Üzümlü</option>
+                    <option value="Aşkale" il-slug="erzurum">Aşkale</option>
+                    <option value="Aziziye" il-slug="erzurum">Aziziye</option>
+                    <option value="Çat" il-slug="erzurum">Çat</option>
+                    <option value="Hınıs" il-slug="erzurum">Hınıs</option>
+                    <option value="Horasan" il-slug="erzurum">Horasan</option>
+                    <option value="İspir" il-slug="erzurum">İspir</option>
+                    <option value="Karaçoban" il-slug="erzurum">Karaçoban</option>
+                    <option value="Karayazı" il-slug="erzurum">Karayazı</option>
+                    <option value="Köprüköy" il-slug="erzurum">Köprüköy</option>
+                    <option value="Narman" il-slug="erzurum">Narman</option>
+                    <option value="Oltu" il-slug="erzurum">Oltu</option>
+                    <option value="Olur" il-slug="erzurum">Olur</option>
+                    <option value="Pasinler" il-slug="erzurum">Pasinler</option>
+                    <option value="Pazaryolu" il-slug="erzurum">Pazaryolu</option>
+                    <option value="Palandöken" il-slug="erzurum">Palandöken</option>
+                    <option value="Pasinler" il-slug="erzurum">Pasinler</option>
+                    <option value="Pazaryolu" il-slug="erzurum">Pazaryolu</option>
+                    <option value="Tortum" il-slug="erzurum">Tortum</option>
+                    <option value="Uzundere" il-slug="erzurum">Uzundere</option>
+                    <option value="Alpu" il-slug="eskisehir">Alpu</option>
+                    <option value="Beylikova" il-slug="eskisehir">Beylikova</option>
+                    <option value="Çifteler" il-slug="eskisehir">Çifteler</option>
+                    <option value="Günyüzü" il-slug="eskisehir">Günyüzü</option>
+                    <option value="Han" il-slug="eskisehir">Han</option>
+                    <option value="İnönü" il-slug="eskisehir">İnönü</option>
+                    <option value="Mahmudiye" il-slug="eskisehir">Mahmudiye</option>
+                    <option value="Mihalıççık" il-slug="eskisehir">Mihalıççık</option>
+                    <option value="Mihalgazi" il-slug="eskisehir">Mihalgazi</option>
+                    <option value="Odunpazarı" il-slug="eskisehir">Odunpazarı</option>
+                    <option value="Sarıcakaya" il-slug="eskisehir">Sarıcakaya</option>
+                    <option value="Seyitgazi" il-slug="eskisehir">Seyitgazi</option>
+                    <option value="Sivrihisar" il-slug="eskisehir">Sivrihisar</option>
+                    <option value="Tepebaşı" il-slug="eskisehir">Tepebaşı</option>
+                    <option value="Araban" il-slug="gaziantep">Araban</option>
+                    <option value="İslahiye" il-slug="gaziantep">İslahiye</option>
+                    <option value="Karkamış" il-slug="gaziantep">Karkamış</option>
+                    <option value="Nizip" il-slug="gaziantep">Nizip</option>
+                    <option value="Oğuzeli" il-slug="gaziantep">Oğuzeli</option>
+                    <option value="Şahinbey" il-slug="gaziantep">Şahinbey</option>
+                    <option value="Şehitkamil" il-slug="gaziantep">Şehitkamil</option>
+                    <option value="Yavuzeli" il-slug="gaziantep">Yavuzeli</option>
+                    <option value="Alucra" il-slug="giresun">Alucra</option>
+                    <option value="Bulancak" il-slug="giresun">Bulancak</option>
+                    <option value="Çamoluk" il-slug="giresun">Çamoluk</option>
+                    <option value="Çanakçı" il-slug="giresun">Çanakçı</option>
+                    <option value="Dereli" il-slug="giresun">Dereli</option>
+                    <option value="Doğankent" il-slug="giresun">Doğankent</option>
+                    <option value="Espiye" il-slug="giresun">Espiye</option>
+                    <option value="Eynesil" il-slug="giresun">Eynesil</option>
+                    <option value="Görele" il-slug="giresun">Görele</option>
+                    <option value="Güce" il-slug="giresun">Güce</option>
+                    <option value="Keşap" il-slug="giresun">Keşap</option>
+                    <option value="Piraziz" il-slug="giresun">Piraziz</option>
+                    <option value="Şebinkarahisar" il-slug="giresun">Şebinkarahisar</option>
+                    <option value="Tirebolu" il-slug="giresun">Tirebolu</option>
+                    <option value="Yağlıdere" il-slug="giresun">Yağlıdere</option>
+                    <option value="Kelkit" il-slug="gumushane">Kelkit</option>
+                    <option value="Köse" il-slug="gumushane">Köse</option>
+                    <option value="Kürtün" il-slug="gumushane">Kürtün</option>
+                    <option value="Şiran" il-slug="gumushane">Şiran</option>
+                    <option value="Torul" il-slug="gumushane">Torul</option>
+                    <option value="Çukurca" il-slug="hakkari">Çukurca</option>
+                    <option value="Şemdinli" il-slug="hakkari">Şemdinli</option>
+                    <option value="Yüksekova" il-slug="hakkari">Yüksekova</option>
+                    <option value="Altınözü" il-slug="hatay">Altınözü</option>
+                    <option value="Antakya" il-slug="hatay">Antakya</option>
+                    <option value="Arsuz" il-slug="hatay">Arsuz</option>
+                    <option value="Belen" il-slug="hatay">Belen</option>
+                    <option value="Defne" il-slug="hatay">Defne</option>
+                    <option value="Dörtyol" il-slug="hatay">Dörtyol</option>
+                    <option value="Erzin" il-slug="hatay">Erzin</option>
+                    <option value="Hassa" il-slug="hatay">Hassa</option>
+                    <option value="İskenderun" il-slug="hatay">İskenderun</option>
+                    <option value="Kırıkhan" il-slug="hatay">Kırıkhan</option>
+                    <option value="Kumlu" il-slug="hatay">Kumlu</option>
+                    <option value="Payas" il-slug="hatay">Payas</option>
+                    <option value="Reyhanlı" il-slug="hatay">Reyhanlı</option>
+                    <option value="Samandağ" il-slug="hatay">Samandağ</option>
+                    <option value="Yayladağı" il-slug="hatay">Yayladağı</option>
+                    <option value="Aksu" il-slug="isparta">Aksu</option>
+                    <option value="Atabey" il-slug="isparta">Atabey</option>
+                    <option value="Eğirdir" il-slug="isparta">Eğirdir</option>
+                    <option value="Gelendost" il-slug="isparta">Gelendost</option>
+                    <option value="Gönen" il-slug="isparta">Gönen</option>
+                    <option value="Keçiborlu" il-slug="isparta">Keçiborlu</option>
+                    <option value="Senirkent" il-slug="isparta">Senirkent</option>
+                    <option value="Sütçüler" il-slug="isparta">Sütçüler</option>
+                    <option value="Şarkikaraağaç" il-slug="isparta">Şarkikaraağaç</option>
+                    <option value="Uluborlu" il-slug="isparta">Uluborlu</option>
+                    <option value="Yalvaç" il-slug="isparta">Yalvaç</option>
+                    <option value="Yenişarbademli" il-slug="isparta">Yenişarbademli</option>
+                    <option value="Akdeniz" il-slug="mersin">Akdeniz</option>
+                    <option value="Anamur" il-slug="mersin">Anamur</option>
+                    <option value="Aydıncık" il-slug="mersin">Aydıncık</option>
+                    <option value="Bozyazı" il-slug="mersin">Bozyazı</option>
+                    <option value="Çamlıyayla" il-slug="mersin">Çamlıyayla</option>
+                    <option value="Erdemli" il-slug="mersin">Erdemli</option>
+                    <option value="Gülnar" il-slug="mersin">Gülnar</option>
+                    <option value="Mezitli" il-slug="mersin">Mezitli</option>
+                    <option value="Mut" il-slug="mersin">Mut</option>
+                    <option value="Silifke" il-slug="mersin">Silifke</option>
+                    <option value="Tarsus" il-slug="mersin">Tarsus</option>
+                    <option value="Toroslar" il-slug="mersin">Toroslar</option>
+                    <option value="Yenişehir" il-slug="mersin">Yenişehir</option>
+                    <option value="Adalar" il-slug="istanbul">Adalar</option>
+                    <option value="Arnavutköy" il-slug="istanbul">Arnavutköy</option>
+                    <option value="Ataşehir" il-slug="istanbul">Ataşehir</option>
+                    <option value="Avcılar" il-slug="istanbul">Avcılar</option>
+                    <option value="Bağcılar" il-slug="istanbul">Bağcılar</option>
+                    <option value="Bahçelievler" il-slug="istanbul">Bahçelievler</option>
+                    <option value="Bakırköy" il-slug="istanbul">Bakırköy</option>
+                    <option value="Başakşehir" il-slug="istanbul">Başakşehir</option>
+                    <option value="Bayrampaşa" il-slug="istanbul">Bayrampaşa</option>
+                    <option value="Beşiktaş" il-slug="istanbul">Beşiktaş</option>
+                    <option value="Beykoz" il-slug="istanbul">Beykoz</option>
+                    <option value="Beylikdüzü" il-slug="istanbul">Beylikdüzü</option>
+                    <option value="Beyoğlu" il-slug="istanbul">Beyoğlu</option>
+                    <option value="Büyükçekmece" il-slug="istanbul">Büyükçekmece</option>
+                    <option value="Çatalca" il-slug="istanbul">Çatalca</option>
+                    <option value="Çekmeköy" il-slug="istanbul">Çekmeköy</option>
+                    <option value="Esenler" il-slug="istanbul">Esenler</option>
+                    <option value="Esenyurt" il-slug="istanbul">Esenyurt</option>
+                    <option value="Eyüpsultan" il-slug="istanbul">Eyüpsultan</option>
+                    <option value="Fatih" il-slug="istanbul">Fatih</option>
+                    <option value="Gaziosmanpaşa" il-slug="istanbul">Gaziosmanpaşa</option>
+                    <option value="Güngören" il-slug="istanbul">Güngören</option>
+                    <option value="Kadıköy" il-slug="istanbul">Kadıköy</option>
+                    <option value="Kağıthane" il-slug="istanbul">Kağıthane</option>
+                    <option value="Kartal" il-slug="istanbul">Kartal</option>
+                    <option value="Küçükçekmece" il-slug="istanbul">Küçükçekmece</option>
+                    <option value="Maltepe" il-slug="istanbul">Maltepe</option>
+                    <option value="Pendik" il-slug="istanbul">Pendik</option>
+                    <option value="Sancaktepe" il-slug="istanbul">Sancaktepe</option>
+                    <option value="Sarıyer" il-slug="istanbul">Sarıyer</option>
+                    <option value="Silivri" il-slug="istanbul">Silivri</option>
+                    <option value="Sultanbeyli" il-slug="istanbul">Sultanbeyli</option>
+                    <option value="Sultangazi" il-slug="istanbul">Sultangazi</option>
+                    <option value="Şile" il-slug="istanbul">Şile</option>
+                    <option value="Şişli" il-slug="istanbul">Şişli</option>
+                    <option value="Tuzla" il-slug="istanbul">Tuzla</option>
+                    <option value="Ümraniye" il-slug="istanbul">Ümraniye</option>
+                    <option value="Üsküdar" il-slug="istanbul">Üsküdar</option>
+                    <option value="Zeytinburnu" il-slug="istanbul">Zeytinburnu</option>
+                    <option value="Aliağa" il-slug="izmir">Aliağa</option>
+                    <option value="Balçova" il-slug="izmir">Balçova</option>
+                    <option value="Bayındır" il-slug="izmir">Bayındır</option>
+                    <option value="Bayraklı" il-slug="izmir">Bayraklı</option>
+                    <option value="Bergama" il-slug="izmir">Bergama</option>
+                    <option value="Beydağ" il-slug="izmir">Beydağ</option>
+                    <option value="Bornova" il-slug="izmir">Bornova</option>
+                    <option value="Buca" il-slug="izmir">Buca</option>
+                    <option value="Çeşme" il-slug="izmir">Çeşme</option>
+                    <option value="Çiğli" il-slug="izmir">Çiğli</option>
+                    <option value="Dikili" il-slug="izmir">Dikili</option>
+                    <option value="Foça" il-slug="izmir">Foça</option>
+                    <option value="Gaziemir" il-slug="izmir">Gaziemir</option>
+                    <option value="Güzelbahçe" il-slug="izmir">Güzelbahçe</option>
+                    <option value="Karabağlar" il-slug="izmir">Karabağlar</option>
+                    <option value="Karaburun" il-slug="izmir">Karaburun</option>
+                    <option value="Karşıyaka" il-slug="izmir">Karşıyaka</option>
+                    <option value="Kemalpaşa" il-slug="izmir">Kemalpaşa</option>
+                    <option value="Kınık" il-slug="izmir">Kınık</option>
+                    <option value="Kiraz" il-slug="izmir">Kiraz</option>
+                    <option value="Konak" il-slug="izmir">Konak</option>
+                    <option value="Menderes" il-slug="izmir">Menderes</option>
+                    <option value="Menemen" il-slug="izmir">Menemen</option>
+                    <option value="Narlıdere" il-slug="izmir">Narlıdere</option>
+                    <option value="Ödemiş" il-slug="izmir">Ödemiş</option>
+                    <option value="Seferihisar" il-slug="izmir">Seferihisar</option>
+                    <option value="Selçuk" il-slug="izmir">Selçuk</option>
+                    <option value="Tire" il-slug="izmir">Tire</option>
+                    <option value="Torbalı" il-slug="izmir">Torbalı</option>
+                    <option value="Urla" il-slug="izmir">Urla</option>
+                    <option value="Akyaka" il-slug="kars">Akyaka</option>
+                    <option value="Arpaçay" il-slug="kars">Arpaçay</option>
+                    <option value="Digor" il-slug="kars">Digor</option>
+                    <option value="Kağızman" il-slug="kars">Kağızman</option>
+                    <option value="Kars Merkez" il-slug="kars">Kars Merkez</option>
+                    <option value="Sarıkamış" il-slug="kars">Sarıkamış</option>
+                    <option value="Selim" il-slug="kars">Selim</option>
+                    <option value="Susuz" il-slug="kars">Susuz</option>
+                    <option value="Abana" il-slug="kastamonu">Abana</option>
+                    <option value="Ağlı" il-slug="kastamonu">Ağlı</option>
+                    <option value="Araç" il-slug="kastamonu">Araç</option>
+                    <option value="Azdavay" il-slug="kastamonu">Azdavay</option>
+                    <option value="Bozkurt" il-slug="kastamonu">Bozkurt</option>
+                    <option value="Cide" il-slug="kastamonu">Cide</option>
+                    <option value="Çatalzeytin" il-slug="kastamonu">Çatalzeytin</option>
+                    <option value="Daday" il-slug="kastamonu">Daday</option>
+                    <option value="Devrekani" il-slug="kastamonu">Devrekani</option>
+                    <option value="Doğanyurt" il-slug="kastamonu">Doğanyurt</option>
+                    <option value="Hanönü" il-slug="kastamonu">Hanönü</option>
+                    <option value="İhsangazi" il-slug="kastamonu">İhsangazi</option>
+                    <option value="İnebolu" il-slug="kastamonu">İnebolu</option>
+                    <option value="Kastamonu Merkez" il-slug="kastamonu">Kastamonu Merkez</option>
+                    <option value="Küre" il-slug="kastamonu">Küre</option>
+                    <option value="Pınarbaşı" il-slug="kastamonu">Pınarbaşı</option>
+                    <option value="Seydiler" il-slug="kastamonu">Seydiler</option>
+                    <option value="Şenpazar" il-slug="kastamonu">Şenpazar</option>
+                    <option value="Taşköprü" il-slug="kastamonu">Taşköprü</option>
+                    <option value="Tosya" il-slug="kastamonu">Tosya</option>
+                    <option value="Akkışla" il-slug="kayseri">Akkışla</option>
+                    <option value="Bünyan" il-slug="kayseri">Bünyan</option>
+                    <option value="Develi" il-slug="kayseri">Develi</option>
+                    <option value="Felahiye" il-slug="kayseri">Felahiye</option>
+                    <option value="Hacılar" il-slug="kayseri">Hacılar</option>
+                    <option value="İncesu" il-slug="kayseri">İncesu</option>
+                    <option value="Kocasinan" il-slug="kayseri">Kocasinan</option>
+                    <option value="Melikgazi" il-slug="kayseri">Melikgazi</option>
+                    <option value="Özvatan" il-slug="kayseri">Özvatan</option>
+                    <option value="Pınarbaşı" il-slug="kayseri">Pınarbaşı</option>
+                    <option value="Sarıoğlan" il-slug="kayseri">Sarıoğlan</option>
+                    <option value="Sarız" il-slug="kayseri">Sarız</option>
+                    <option value="Talas" il-slug="kayseri">Talas</option>
+                    <option value="Tomarza" il-slug="kayseri">Tomarza</option>
+                    <option value="Yahyalı" il-slug="kayseri">Yahyalı</option>
+                    <option value="Yeşilhisar" il-slug="kayseri">Yeşilhisar</option>
+                    <option value="Babaeski" il-slug="kirklareli">Babaeski</option>
+                    <option value="Demirköy" il-slug="kirklareli">Demirköy</option>
+                    <option value="Kofçaz" il-slug="kirklareli">Kofçaz</option>
+                    <option value="Lüleburgaz" il-slug="kirklareli">Lüleburgaz</option>
+                    <option value="Pehlivanköy" il-slug="kirklareli">Pehlivanköy</option>
+                    <option value="Pınarhisar" il-slug="kirklareli">Pınarhisar</option>
+                    <option value="Vize" il-slug="kirklareli">Vize</option>
+                    <option value="Akçakent" il-slug="kirsehir">Akçakent</option>
+                    <option value="Akpınar" il-slug="kirsehir">Akpınar</option>
+                    <option value="Boztepe" il-slug="kirsehir">Boztepe</option>
+                    <option value="Çiçekdağı" il-slug="kirsehir">Çiçekdağı</option>
+                    <option value="Kaman" il-slug="kirsehir">Kaman</option>
+                    <option value="Kırşehir Merkez" il-slug="kirsehir">Kırşehir Merkez</option>
+                    <option value="Mucur" il-slug="kirsehir">Mucur</option>
+                    <option value="Başiskele" il-slug="kocaeli">Başiskele</option>
+                    <option value="Çayırova" il-slug="kocaeli">Çayırova</option>
+                    <option value="Darıca" il-slug="kocaeli">Darıca</option>
+                    <option value="Derince" il-slug="kocaeli">Derince</option>
+                    <option value="Dilovası" il-slug="kocaeli">Dilovası</option>
+                    <option value="Gebze" il-slug="kocaeli">Gebze</option>
+                    <option value="Gölcük" il-slug="kocaeli">Gölcük</option>
+                    <option value="İzmit" il-slug="kocaeli">İzmit</option>
+                    <option value="Kandıra" il-slug="kocaeli">Kandıra</option>
+                    <option value="Karamürsel" il-slug="kocaeli">Karamürsel</option>
+                    <option value="Kartepe" il-slug="kocaeli">Kartepe</option>
+                    <option value="Körfez" il-slug="kocaeli">Körfez</option>
+                    <option value="Ahırlı" il-slug="konya">Ahırlı</option>
+                    <option value="Akören" il-slug="konya">Akören</option>
+                    <option value="Akşehir" il-slug="konya">Akşehir</option>
+                    <option value="Altınekin" il-slug="konya">Altınekin</option>
+                    <option value="Beyşehir" il-slug="konya">Beyşehir</option>
+                    <option value="Bozkır" il-slug="konya">Bozkır</option>
+                    <option value="Cihanbeyli" il-slug="konya">Cihanbeyli</option>
+                    <option value="Çeltik" il-slug="konya">Çeltik</option>
+                    <option value="Çumra" il-slug="konya">Çumra</option>
+                    <option value="Derbent" il-slug="konya">Derbent</option>
+                    <option value="Derebucak" il-slug="konya">Derebucak</option>
+                    <option value="Doğanhisar" il-slug="konya">Doğanhisar</option>
+                    <option value="Emirgazi" il-slug="konya">Emirgazi</option>
+                    <option value="Ereğli" il-slug="konya">Ereğli</option>
+                    <option value="Güneysınır" il-slug="konya">Güneysınır</option>
+                    <option value="Hadim" il-slug="konya">Hadim</option>
+                    <option value="Halkapınar" il-slug="konya">Halkapınar</option>
+                    <option value="Hüyük" il-slug="konya">Hüyük</option>
+                    <option value="Ilgın" il-slug="konya">Ilgın</option>
+                    <option value="Kadınhanı" il-slug="konya">Kadınhanı</option>
+                    <option value="Karapınar" il-slug="konya">Karapınar</option>
+                    <option value="Karatay" il-slug="konya">Karatay</option>
+                    <option value="Kulu" il-slug="konya">Kulu</option>
+                    <option value="Meram" il-slug="konya">Meram</option>
+                    <option value="Sarayönü" il-slug="konya">Sarayönü</option>
+                    <option value="Selçuklu" il-slug="konya">Selçuklu</option>
+                    <option value="Seydişehir" il-slug="konya">Seydişehir</option>
+                    <option value="Taşkent" il-slug="konya">Taşkent</option>
+                    <option value="Tuzlukçu" il-slug="konya">Tuzlukçu</option>
+                    <option value="Yalıhüyük" il-slug="konya">Yalıhüyük</option>
+                    <option value="Yunak" il-slug="konya">Yunak</option>
+                    <option value="Altıntaş" il-slug="kutahya">Altıntaş</option>
+                    <option value="Aslanapa" il-slug="kutahya">Aslanapa</option>
+                    <option value="Çavdarhisar" il-slug="kutahya">Çavdarhisar</option>
+                    <option value="Domaniç" il-slug="kutahya">Domaniç</option>
+                    <option value="Dumlupınar" il-slug="kutahya">Dumlupınar</option>
+                    <option value="Emet" il-slug="kutahya">Emet</option>
+                    <option value="Gediz" il-slug="kutahya">Gediz</option>
+                    <option value="Hisarcık" il-slug="kutahya">Hisarcık</option>
+                    <option value="Pazarlar" il-slug="kutahya">Pazarlar</option>
+                    <option value="Simav" il-slug="kutahya">Simav</option>
+                    <option value="Şaphane" il-slug="kutahya">Şaphane</option>
+                    <option value="Tavşanlı" il-slug="kutahya">Tavşanlı</option>
+                    <option value="Akçadağ" il-slug="malatya">Akçadağ</option>
+                    <option value="Arapgir" il-slug="malatya">Arapgir</option>
+                    <option value="Arguvan" il-slug="malatya">Arguvan</option>
+                    <option value="Battalgazi" il-slug="malatya">Battalgazi</option>
+                    <option value="Darende" il-slug="malatya">Darende</option>
+                    <option value="Doğanşehir" il-slug="malatya">Doğanşehir</option>
+                    <option value="Doğanyol" il-slug="malatya">Doğanyol</option>
+                    <option value="Hekimhan" il-slug="malatya">Hekimhan</option>
+                    <option value="Kale" il-slug="malatya">Kale</option>
+                    <option value="Kuluncak" il-slug="malatya">Kuluncak</option>
+                    <option value="Pütürge" il-slug="malatya">Pütürge</option>
+                    <option value="Yeşilyurt" il-slug="malatya">Yeşilyurt</option>
+                    <option value="Yazıhan" il-slug="malatya">Yazıhan</option>
+                    <option value="Ahmetli" il-slug="manisa">Ahmetli</option>
+                    <option value="Akhisar" il-slug="manisa">Akhisar</option>
+                    <option value="Alaşehir" il-slug="manisa">Alaşehir</option>
+                    <option value="Demirci" il-slug="manisa">Demirci</option>
+                    <option value="Gölmarmara" il-slug="manisa">Gölmarmara</option>
+                    <option value="Gördes" il-slug="manisa">Gördes</option>
+                    <option value="Kırkağaç" il-slug="manisa">Kırkağaç</option>
+                    <option value="Köprübaşı" il-slug="manisa">Köprübaşı</option>
+                    <option value="Kula" il-slug="manisa">Kula</option>
+                    <option value="Salihli" il-slug="manisa">Salihli</option>
+                    <option value="Sarıgöl" il-slug="manisa">Sarıgöl</option>
+                    <option value="Saruhanlı" il-slug="manisa">Saruhanlı</option>
+                    <option value="Selendi" il-slug="manisa">Selendi</option>
+                    <option value="Soma" il-slug="manisa">Soma</option>
+                    <option value="Şehzadeler" il-slug="manisa">Şehzadeler</option>
+                    <option value="Turgutlu" il-slug="manisa">Turgutlu</option>
+                    <option value="Yunusemre" il-slug="manisa">Yunusemre</option>
+                    <option value="Afşin" il-slug="kahramanmaras">Afşin</option>
+                    <option value="Andırın" il-slug="kahramanmaras">Andırın</option>
+                    <option value="Çağlayancerit" il-slug="kahramanmaras">Çağlayancerit</option>
+                    <option value="Dulkadiroğlu" il-slug="kahramanmaras">Dulkadiroğlu</option>
+                    <option value="Ekinözü" il-slug="kahramanmaras">Ekinözü</option>
+                    <option value="Elbistan" il-slug="kahramanmaras">Elbistan</option>
+                    <option value="Göksun" il-slug="kahramanmaras">Göksun</option>
+                    <option value="Nurhak" il-slug="kahramanmaras">Nurhak</option>
+                    <option value="Onikişubat" il-slug="kahramanmaras">Onikişubat</option>
+                    <option value="Pazarcık" il-slug="kahramanmaras">Pazarcık</option>
+                    <option value="Türkoğlu" il-slug="kahramanmaras">Türkoğlu</option>
+                    <option value="Artuklu" il-slug="mardin">Artuklu</option>
+                    <option value="Dargeçit" il-slug="mardin">Dargeçit</option>
+                    <option value="Derik" il-slug="mardin">Derik</option>
+                    <option value="Kızıltepe" il-slug="mardin">Kızıltepe</option>
+                    <option value="Mazıdağı" il-slug="mardin">Mazıdağı</option>
+                    <option value="Midyat" il-slug="mardin">Midyat</option>
+                    <option value="Nusaybin" il-slug="mardin">Nusaybin</option>
+                    <option value="Ömerli" il-slug="mardin">Ömerli</option>
+                    <option value="Savur" il-slug="mardin">Savur</option>
+                    <option value="Yeşilli" il-slug="mardin">Yeşilli</option>
+                    <option value="Bodrum" il-slug="mugla">Bodrum</option>
+                    <option value="Dalaman" il-slug="mugla">Dalaman</option>
+                    <option value="Datça" il-slug="mugla">Datça</option>
+                    <option value="Fethiye" il-slug="mugla">Fethiye</option>
+                    <option value="Kavaklıdere" il-slug="mugla">Kavaklıdere</option>
+                    <option value="Köyceğiz" il-slug="mugla">Köyceğiz</option>
+                    <option value="Marmaris" il-slug="mugla">Marmaris</option>
+                    <option value="Menteşe" il-slug="mugla">Menteşe</option>
+                    <option value="Milas" il-slug="mugla">Milas</option>
+                    <option value="Ortaca" il-slug="mugla">Ortaca</option>
+                    <option value="Seydikemer" il-slug="mugla">Seydikemer</option>
+                    <option value="Ula" il-slug="mugla">Ula</option>
+                    <option value="Yatağan" il-slug="mugla">Yatağan</option>
+                    <option value="Bulanık" il-slug="mus">Bulanık</option>
+                    <option value="Hasköy" il-slug="mus">Hasköy</option>
+                    <option value="Korkut" il-slug="mus">Korkut</option>
+                    <option value="Malazgirt" il-slug="mus">Malazgirt</option>
+                    <option value="Merkez" il-slug="mus">Merkez</option>
+                    <option value="Varto" il-slug="mus">Varto</option>
+                    <option value="Acıgöl" il-slug="nevsehir">Acıgöl</option>
+                    <option value="Avanos" il-slug="nevsehir">Avanos</option>
+                    <option value="Derinkuyu" il-slug="nevsehir">Derinkuyu</option>
+                    <option value="Gülşehir" il-slug="nevsehir">Gülşehir</option>
+                    <option value="Hacıbektaş" il-slug="nevsehir">Hacıbektaş</option>
+                    <option value="Kozaklı" il-slug="nevsehir">Kozaklı</option>
+                    <option value="Merkez" il-slug="nevsehir">Merkez</option>
+                    <option value="Ürgüp" il-slug="nevsehir">Ürgüp</option>
+                    <option value="Altunhisar" il-slug="nigde">Altunhisar</option>
+                    <option value="Bor" il-slug="nigde">Bor</option>
+                    <option value="Çamardı" il-slug="nigde">Çamardı</option>
+                    <option value="Çiftlik" il-slug="nigde">Çiftlik</option>
+                    <option value="Merkez" il-slug="nigde">Merkez</option>
+                    <option value="Ulukışla" il-slug="nigde">Ulukışla</option>
+                    <option value="Akkuş" il-slug="ordu">Akkuş</option>
+                    <option value="Altınordu" il-slug="ordu">Altınordu</option>
+                    <option value="Aybastı" il-slug="ordu">Aybastı</option>
+                    <option value="Çamaş" il-slug="ordu">Çamaş</option>
+                    <option value="Çatalpınar" il-slug="ordu">Çatalpınar</option>
+                    <option value="Çaybaşı" il-slug="ordu">Çaybaşı</option>
+                    <option value="Fatsa" il-slug="ordu">Fatsa</option>
+                    <option value="Gölköy" il-slug="ordu">Gölköy</option>
+                    <option value="Gülyalı" il-slug="ordu">Gülyalı</option>
+                    <option value="Gürgentepe" il-slug="ordu">Gürgentepe</option>
+                    <option value="İkizce" il-slug="ordu">İkizce</option>
+                    <option value="Kabadüz" il-slug="ordu">Kabadüz</option>
+                    <option value="Kabataş" il-slug="ordu">Kabataş</option>
+                    <option value="Korgan" il-slug="ordu">Korgan</option>
+                    <option value="Kumru" il-slug="ordu">Kumru</option>
+                    <option value="Mesudiye" il-slug="ordu">Mesudiye</option>
+                    <option value="Perşembe" il-slug="ordu">Perşembe</option>
+                    <option value="Ulubey" il-slug="ordu">Ulubey</option>
+                    <option value="Ünye" il-slug="ordu">Ünye</option>
+                    <option value="Ardeşen" il-slug="rize">Ardeşen</option>
+                    <option value="Çamlıhemşin" il-slug="rize">Çamlıhemşin</option>
+                    <option value="Çayeli" il-slug="rize">Çayeli</option>
+                    <option value="Derepazarı" il-slug="rize">Derepazarı</option>
+                    <option value="Fındıklı" il-slug="rize">Fındıklı</option>
+                    <option value="Güneysu" il-slug="rize">Güneysu</option>
+                    <option value="Hemşin" il-slug="rize">Hemşin</option>
+                    <option value="İkizdere" il-slug="rize">İkizdere</option>
+                    <option value="İyidere" il-slug="rize">İyidere</option>
+                    <option value="Kalkandere" il-slug="rize">Kalkandere</option>
+                    <option value="Pazar" il-slug="rize">Pazar</option>
+                    <option value="Merkez" il-slug="rize">Merkez</option>
+                    <option value="Akyazı" il-slug="sakarya">Akyazı</option>
+                    <option value="Arifiye" il-slug="sakarya">Arifiye</option>
+                    <option value="Erenler" il-slug="sakarya">Erenler</option>
+                    <option value="Ferizli" il-slug="sakarya">Ferizli</option>
+                    <option value="Geyve" il-slug="sakarya">Geyve</option>
+                    <option value="Hendek" il-slug="sakarya">Hendek</option>
+                    <option value="Karapürçek" il-slug="sakarya">Karapürçek</option>
+                    <option value="Karasu" il-slug="sakarya">Karasu</option>
+                    <option value="Kaynarca" il-slug="sakarya">Kaynarca</option>
+                    <option value="Kocaali" il-slug="sakarya">Kocaali</option>
+                    <option value="Pamukova" il-slug="sakarya">Pamukova</option>
+                    <option value="Sapanca" il-slug="sakarya">Sapanca</option>
+                    <option value="Serdivan" il-slug="sakarya">Serdivan</option>
+                    <option value="Söğütlü" il-slug="sakarya">Söğütlü</option>
+                    <option value="Taraklı" il-slug="sakarya">Taraklı</option>
+                    <option value="Karasu" il-slug="sakarya">Karasu</option>
+                    <option value="Alaçam" il-slug="samsun">Alaçam</option>
+                    <option value="Asarcık" il-slug="samsun">Asarcık</option>
+                    <option value="Atakum" il-slug="samsun">Atakum</option>
+                    <option value="Ayvacık" il-slug="samsun">Ayvacık</option>
+                    <option value="Bafra" il-slug="samsun">Bafra</option>
+                    <option value="Canik" il-slug="samsun">Canik</option>
+                    <option value="Çarşamba" il-slug="samsun">Çarşamba</option>
+                    <option value="Havza" il-slug="samsun">Havza</option>
+                    <option value="İlkadım" il-slug="samsun">İlkadım</option>
+                    <option value="Kavak" il-slug="samsun">Kavak</option>
+                    <option value="Ladik" il-slug="samsun">Ladik</option>
+                    <option value="Salıpazarı" il-slug="samsun">Salıpazarı</option>
+                    <option value="Tekkeköy" il-slug="samsun">Tekkeköy</option>
+                    <option value="Terme" il-slug="samsun">Terme</option>
+                    <option value="Vezirköprü" il-slug="samsun">Vezirköprü</option>
+                    <option value="Yakakent" il-slug="samsun">Yakakent</option>
+                    <option value="Baykan" il-slug="siirt">Baykan</option>
+                    <option value="Eruh" il-slug="siirt">Eruh</option>
+                    <option value="Kurtalan" il-slug="siirt">Kurtalan</option>
+                    <option value="Merkez" il-slug="siirt">Merkez</option>
+                    <option value="Pervari" il-slug="siirt">Pervari</option>
+                    <option value="Şirvan" il-slug="siirt">Şirvan</option>
+                    <option value="Ayancık" il-slug="sinop">Ayancık</option>
+                    <option value="Boyabat" il-slug="sinop">Boyabat</option>
+                    <option value="Dikmen" il-slug="sinop">Dikmen</option>
+                    <option value="Durağan" il-slug="sinop">Durağan</option>
+                    <option value="Erfelek" il-slug="sinop">Erfelek</option>
+                    <option value="Gerze" il-slug="sinop">Gerze</option>
+                    <option value="Saraydüzü" il-slug="sinop">Saraydüzü</option>
+                    <option value="Türkeli" il-slug="sinop">Türkeli</option>
+                    <option value="Merkez" il-slug="sinop">Merkez</option>
+                    <option value="Akıncılar" il-slug="sivas">Akıncılar</option>
+                    <option value="Altınyayla" il-slug="sivas">Altınyayla</option>
+                    <option value="Divriği" il-slug="sivas">Divriği</option>
+                    <option value="Doğanşar" il-slug="sivas">Doğanşar</option>
+                    <option value="Gemerek" il-slug="sivas">Gemerek</option>
+                    <option value="Gölova" il-slug="sivas">Gölova</option>
+                    <option value="Gürün" il-slug="sivas">Gürün</option>
+                    <option value="Hafik" il-slug="sivas">Hafik</option>
+                    <option value="İmranlı" il-slug="sivas">İmranlı</option>
+                    <option value="Kangal" il-slug="sivas">Kangal</option>
+                    <option value="Koyulhisar" il-slug="sivas">Koyulhisar</option>
+                    <option value="Suşehri" il-slug="sivas">Suşehri</option>
+                    <option value="Şarkışla" il-slug="sivas">Şarkışla</option>
+                    <option value="Ulaş" il-slug="sivas">Ulaş</option>
+                    <option value="Yıldızeli" il-slug="sivas">Yıldızeli</option>
+                    <option value="Zara" il-slug="sivas">Zara</option>
+                    <option value="Merkez" il-slug="sivas">Merkez</option>
+                    <option value="Çerkezköy" il-slug="tekirdag">Çerkezköy</option>
+                    <option value="Çorlu" il-slug="tekirdag">Çorlu</option>
+                    <option value="Ergene" il-slug="tekirdag">Ergene</option>
+                    <option value="Hayrabolu" il-slug="tekirdag">Hayrabolu</option>
+                    <option value="Kapaklı" il-slug="tekirdag">Kapaklı</option>
+                    <option value="Malkara" il-slug="tekirdag">Malkara</option>
+                    <option value="Marmaraereğlisi" il-slug="tekirdag">Marmaraereğlisi</option>
+                    <option value="Muratlı" il-slug="tekirdag">Muratlı</option>
+                    <option value="Saray" il-slug="tekirdag">Saray</option>
+                    <option value="Süleymanpaşa" il-slug="tekirdag">Süleymanpaşa</option>
+                    <option value="Şarköy" il-slug="tekirdag">Şarköy</option>
+                    <option value="Almus" il-slug="tokat">Almus</option>
+                    <option value="Artova" il-slug="tokat">Artova</option>
+                    <option value="Başçiftlik" il-slug="tokat">Başçiftlik</option>
+                    <option value="Erbaa" il-slug="tokat">Erbaa</option>
+                    <option value="Niksar" il-slug="tokat">Niksar</option>
+                    <option value="Pazar" il-slug="tokat">Pazar</option>
+                    <option value="Reşadiye" il-slug="tokat">Reşadiye</option>
+                    <option value="Sulusaray" il-slug="tokat">Sulusaray</option>
+                    <option value="Turhal" il-slug="tokat">Turhal</option>
+                    <option value="Yeşilyurt" il-slug="tokat">Yeşilyurt</option>
+                    <option value="Zile" il-slug="tokat">Zile</option>
+                    <option value="Merkez" il-slug="tokat">Merkez</option>
+                    <option value="Akçaabat" il-slug="trabzon">Akçaabat</option>
+                    <option value="Araklı" il-slug="trabzon">Araklı</option>
+                    <option value="Arsin" il-slug="trabzon">Arsin</option>
+                    <option value="Beşikdüzü" il-slug="trabzon">Beşikdüzü</option>
+                    <option value="Çarşıbaşı" il-slug="trabzon">Çarşıbaşı</option>
+                    <option value="Çaykara" il-slug="trabzon">Çaykara</option>
+                    <option value="Dernekpazarı" il-slug="trabzon">Dernekpazarı</option>
+                    <option value="Düzköy" il-slug="trabzon">Düzköy</option>
+                    <option value="Hayrat" il-slug="trabzon">Hayrat</option>
+                    <option value="Köprübaşı" il-slug="trabzon">Köprübaşı</option>
+                    <option value="Maçka" il-slug="trabzon">Maçka</option>
+                    <option value="Of" il-slug="trabzon">Of</option>
+                    <option value="Sürmene" il-slug="trabzon">Sürmene</option>
+                    <option value="Şalpazarı" il-slug="trabzon">Şalpazarı</option>
+                    <option value="Tonya" il-slug="trabzon">Tonya</option>
+                    <option value="Vakfıkebir" il-slug="trabzon">Vakfıkebir</option>
+                    <option value="Yomra" il-slug="trabzon">Yomra</option>
+                    <option value="Çemişgezek" il-slug="tunceli">Çemişgezek</option>
+                    <option value="Hozat" il-slug="tunceli">Hozat</option>
+                    <option value="Mazgirt" il-slug="tunceli">Mazgirt</option>
+                    <option value="Nazımiye" il-slug="tunceli">Nazımiye</option>
+                    <option value="Ovacık" il-slug="tunceli">Ovacık</option>
+                    <option value="Pertek" il-slug="tunceli">Pertek</option>
+                    <option value="Pülümür" il-slug="tunceli">Pülümür</option>
+                    <option value="Akçakale" il-slug="sanliurfa">Akçakale</option>
+                    <option value="Birecik" il-slug="sanliurfa">Birecik</option>
+                    <option value="Bozova" il-slug="sanliurfa">Bozova</option>
+                    <option value="Ceylanpınar" il-slug="sanliurfa">Ceylanpınar</option>
+                    <option value="Halfeti" il-slug="sanliurfa">Halfeti</option>
+                    <option value="Harran" il-slug="sanliurfa">Harran</option>
+                    <option value="Hilvan" il-slug="sanliurfa">Hilvan</option>
+                    <option value="Karaköprü" il-slug="sanliurfa">Karaköprü</option>
+                    <option value="Siverek" il-slug="sanliurfa">Siverek</option>
+                    <option value="Suruç" il-slug="sanliurfa">Suruç</option>
+                    <option value="Viranşehir" il-slug="sanliurfa">Viranşehir</option>
+                    <option value="Banaz" il-slug="usak">Banaz</option>
+                    <option value="Eşme" il-slug="usak">Eşme</option>
+                    <option value="Karahallı" il-slug="usak">Karahallı</option>
+                    <option value="Sivaslı" il-slug="usak">Sivaslı</option>
+                    <option value="Ulubey" il-slug="usak">Ulubey</option>
+                    <option value="Uşak Merkez" il-slug="usak">Uşak Merkez</option>
+                    <option value="Bahçesaray" il-slug="van">Bahçesaray</option>
+                    <option value="Başkale" il-slug="van">Başkale</option>
+                    <option value="Çaldıran" il-slug="van">Çaldıran</option>
+                    <option value="Çatak" il-slug="van">Çatak</option>
+                    <option value="Edremit" il-slug="van">Edremit</option>
+                    <option value="Erciş" il-slug="van">Erciş</option>
+                    <option value="Gevaş" il-slug="van">Gevaş</option>
+                    <option value="Gürpınar" il-slug="van">Gürpınar</option>
+                    <option value="İpekyolu" il-slug="van">İpekyolu</option>
+                    <option value="Muradiye" il-slug="van">Muradiye</option>
+                    <option value="Özalp" il-slug="van">Özalp</option>
+                    <option value="Saray" il-slug="van">Saray</option>
+                    <option value="Akdağmadeni" il-slug="yozgat">Akdağmadeni</option>
+                    <option value="Aydıncık" il-slug="yozgat">Aydıncık</option>
+                    <option value="Boğazlıyan" il-slug="yozgat">Boğazlıyan</option>
+                    <option value="Çandır" il-slug="yozgat">Çandır</option>
+                    <option value="Çayıralan" il-slug="yozgat">Çayıralan</option>
+                    <option value="Çekerek" il-slug="yozgat">Çekerek</option>
+                    <option value="Kadışehri" il-slug="yozgat">Kadışehri</option>
+                    <option value="Saraykent" il-slug="yozgat">Saraykent</option>
+                    <option value="Sarıkaya" il-slug="yozgat">Sarıkaya</option>
+                    <option value="Sorgun" il-slug="yozgat">Sorgun</option>
+                    <option value="Şefaatli" il-slug="yozgat">Şefaatli</option>
+                    <option value="Yenifakılı" il-slug="yozgat">Yenifakılı</option>
+                    <option value="Yerköy" il-slug="yozgat">Yerköy</option>
+                    <option value="Merkez" il-slug="yozgat">Yozgat Merkez</option>
+                    <option value="Alaplı" il-slug="zonguldak">Alaplı</option>
+                    <option value="Çaycuma" il-slug="zonguldak">Çaycuma</option>
+                    <option value="Devrek" il-slug="zonguldak">Devrek</option>
+                    <option value="Ereğli" il-slug="zonguldak">Ereğli</option>
+                    <option value="Gökçebey" il-slug="zonguldak">Gökçebey</option>
+                    <option value="Merkez" il-slug="zonguldak">Zonguldak Merkez</option>
+                    <option value="Ağaçören" il-slug="aksaray">Ağaçören</option>
+                    <option value="Eskil" il-slug="aksaray">Eskil</option>
+                    <option value="Gülağaç" il-slug="aksaray">Gülağaç</option>
+                    <option value="Güzelyurt" il-slug="aksaray">Güzelyurt</option>
+                    <option value="Merkez" il-slug="aksaray">Aksaray Merkez</option>
+                    <option value="Ortaköy" il-slug="aksaray">Ortaköy</option>
+                    <option value="Sarıyahşi" il-slug="aksaray">Sarıyahşi</option>
+                    <option value="Aydıntepe" il-slug="bayburt">Aydıntepe</option>
+                    <option value="Demirözü" il-slug="bayburt">Demirözü</option>
+                    <option value="Merkez" il-slug="bayburt">Bayburt Merkez</option>
+                    <option value="Ayrancı" il-slug="karaman">Ayrancı</option>
+                    <option value="Başyayla" il-slug="karaman">Başyayla</option>
+                    <option value="Ermenek" il-slug="karaman">Ermenek</option>
+                    <option value="Kazımkarabekir" il-slug="karaman">Kazımkarabekir</option>
+                    <option value="Merkez" il-slug="karaman">Karaman Merkez</option>
+                    <option value="Sarıveliler" il-slug="karaman">Sarıveliler</option>
+                    <option value="Bahşili" il-slug="kirikkale">Bahşili</option>
+                    <option value="Balışeyh" il-slug="kirikkale">Balışeyh</option>
+                    <option value="Çelebi" il-slug="kirikkale">Çelebi</option>
+                    <option value="Delice" il-slug="kirikkale">Delice</option>
+                    <option value="Karakeçili" il-slug="kirikkale">Karakeçili</option>
+                    <option value="Keskin" il-slug="kirikkale">Keskin</option>
+                    <option value="Merkez" il-slug="kirikkale">Kırıkkale Merkez</option>
+                    <option value="Sulakyurt" il-slug="kirikkale">Sulakyurt</option>
+                    <option value="Yahşihan" il-slug="kirikkale">Yahşihan</option>
+                    <option value="Beşiri" il-slug="batman">Beşiri</option>
+                    <option value="Gercüş" il-slug="batman">Gercüş</option>
+                    <option value="Hasankeyf" il-slug="batman">Hasankeyf</option>
+                    <option value="Kozluk" il-slug="batman">Kozluk</option>
+                    <option value="Sason" il-slug="batman">Sason</option>
+                    <option value="Beytüşşebap" il-slug="sirnak">Beytüşşebap</option>
+                    <option value="Cizre" il-slug="sirnak">Cizre</option>
+                    <option value="Güçlükonak" il-slug="sirnak">Güçlükonak</option>
+                    <option value="İdil" il-slug="sirnak">İdil</option>
+                    <option value="Silopi" il-slug="sirnak">Silopi</option>
+                    <option value="Şırnak" il-slug="sirnak">Şırnak</option>
+                    <option value="Amasra" il-slug="bartin">Amasra</option>
+                    <option value="Kurucaşile" il-slug="bartin">Kurucaşile</option>
+                    <option value="Ulus" il-slug="bartin">Ulus</option>
+                    <option value="Çıldır" il-slug="ardahan">Çıldır</option>
+                    <option value="Damal" il-slug="ardahan">Damal</option>
+                    <option value="Göle" il-slug="ardahan">Göle</option>
+                    <option value="Hanak" il-slug="ardahan">Hanak</option>
+                    <option value="Posof" il-slug="ardahan">Posof</option>
+                    <option value="Aralık" il-slug="igdir">Aralık</option>
+                    <option value="Karakoyunlu" il-slug="igdir">Karakoyunlu</option>
+                    <option value="Tuzluca" il-slug="igdir">Tuzluca</option>
+                    <option value="Altınova" il-slug="yalova">Altınova</option>
+                    <option value="Armutlu" il-slug="yalova">Armutlu</option>
+                    <option value="Çınarcık" il-slug="yalova">Çınarcık</option>
+                    <option value="Çiftlikköy" il-slug="yalova">Çiftlikköy</option>
+                    <option value="Termal" il-slug="yalova">Termal</option>
+                    <option value="Eflani" il-slug="karabuk">Eflani</option>
+                    <option value="Eskipazar" il-slug="karabuk">Eskipazar</option>
+                    <option value="Karabük Merkez" il-slug="karabuk">Karabük Merkez</option>
+                    <option value="Ovacık" il-slug="karabuk">Ovacık</option>
+                    <option value="Safranbolu" il-slug="karabuk">Safranbolu</option>
+                    <option value="Yenice" il-slug="karabuk">Yenice</option>
+                    <option value="Elbeyli" il-slug="kilis">Elbeyli</option>
+                    <option value="Kilis Merke" il-slug="kilis">Kilis Merkez</option>
+                    <option value="Musabeyli" il-slug="kilis">Musabeyli</option>
+                    <option value="Polateli" il-slug="kilis">Polateli</option>
+                    <option value="Bahçe" il-slug="osmaniye">Bahçe</option>
+                    <option value="Düziçi" il-slug="osmaniye">Düziçi</option>
+                    <option value="Hasanbeyli" il-slug="osmaniye">Hasanbeyli</option>
+                    <option value="Kadirli" il-slug="osmaniye">Kadirli</option>
+                    <option value="Osmaniye Merke" il-slug="osmaniye">Osmaniye Merkez</option>
+                    <option value="Akçakoca" il-slug="duzce">Akçakoca</option>
+                    <option value="Cumayeri" il-slug="duzce">Cumayeri</option>
+                    <option value="Çilimli" il-slug="duzce">Çilimli</option>
+                    <option value="Gölyaka" il-slug="duzce">Gölyaka</option>
+                    <option value="Gümüşova" il-slug="duzce">Gümüşova</option>
+                    <option value="Kaynaşlı" il-slug="duzce">Kaynaşlı</option>
+                    <option value="Yığılca" il-slug="duzce">Yığılca</option>
+                    <option value="Düzce Merkez" il-slug="duzce">Düzce Merkez</option>
+                </select>
+            </div>
+
+            <div class="mb-3 input-field">
+                <label for="comment">Açık Adres</label>
+                <textarea class="form-control input" rows="5" asp-for="AcikAdres"></textarea>
+                <span class="text-black text-black-50" asp-validation-for="AcikAdres"></span>
+            </div>
+            <button type="submit" class="btn btn-info" style="width:250px">İlan Ver</button>
+            <br />
+            <br />
+            <span class="alert alert-info">
+                - Size sorulan hiçbir değeri boş <br />
+                bırakmamanız gerekmektedir.
+            </span>
+        </div>
+</form>
+    </div>
+@* <div style="float:left; justify-content:flex-end; margin-left:20px; margin-top:30px;">
+    <img src="/FotoUrl/ilanVer.PNG" style="margin-top: 50px; width: 630px; height: 600px; border-radius: 50px; opacity:0.99;" alt="" srcset="">
+</div> *@
+
+<script>
+    
+</script>

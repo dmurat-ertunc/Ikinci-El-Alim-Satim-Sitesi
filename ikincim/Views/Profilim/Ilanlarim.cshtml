@@ -1,0 +1,67 @@
+﻿@model KategorilerIlanlarUrunlerUser
+ @{
+    ViewData["Title"] = "Ilanlarim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="margin-top:30px; margin-left:180px; background-color:#fff; border:23px whitesmoke inset border-radius:15px; width:1500px;">
+    <h2 style="text-align:center;">İlanlarım</h2>
+    <table class="table" >
+        <thead>
+            <tr>
+                <th scope="col" style="background-color:gainsboro;">#</th>
+                <th scope="col" style="background-color:gainsboro;">Fotoğraf</th>
+                <th scope="col" style="background-color:gainsboro;">İlan Adı</th>
+                <th scope="col" style="background-color:gainsboro;">Açıklama</th>
+                <th scope="col" style="background-color:gainsboro;">Kategori</th>
+                <th scope="col" style="background-color:gainsboro;">Ürün Çeşiti</th>
+                <th scope="col" style="background-color:gainsboro;">Fiyat</th>
+                <th scope="col" style="background-color:gainsboro;">Satıldı Olarak İşaretle</th>
+                <th scope="col" style="background-color:gainsboro;">Güncelle</th>
+                <th scope="col" style="background-color:gainsboro;">Görüntüle</th>
+                <th scope="col" style="background-color:gainsboro;">Beğenilme Sayısı</th>
+            </tr>
+        </thead>
+        <tbody>
+                @foreach(var item in Model.profilimTMPs)
+                {   
+            <tr>
+                    <td>@item.IlanId</td>                              
+                    <td><img src="@item.FotoUrl2" style="width:100px; height:100px;" /></td>                              
+                    <td>@item.IlanAd</td>                              
+                    <td>@item.Aciklama</td>                              
+                    <td>@item.KategoriAd</td>                              
+                    <td>@item.UrunCesiti</td>                              
+                    <td>@item.Fiyat</td>
+                    @if (TempData[$"Durum{@item.IlanId}"] == null)
+                    {
+                        <td><a class="btn btn-success" href="/Profilim/SatildiIsaretle/@item.IlanId" style="width:150px;">Satıldı İşaretle</a></td>
+                    }
+                    @if (TempData[$"Durum{@item.IlanId}"] == "SATILDI")
+                    {
+                        <td><a class="btn btn-danger" href="#" style="width:150px;">@TempData[$"Durum{@item.IlanId}"]</a></td>
+                    }
+                    @if (TempData[$"Durum{@item.IlanId}"] == null)
+                    {
+                        <td><a class="btn btn-secondary">Güncelle</a></td>
+                    }
+                    @if (TempData[$"Durum{@item.IlanId}"] == "SATILDI")
+                    {
+                        <td><a class="btn btn-warning">Satılan İlanı Güncelleyemezsiniz</a></td>
+                    }
+                    @if (TempData[$"Durum{@item.IlanId}"] == null)
+                    {
+                        <td><a class="btn btn-primary" href="/IlanDetay/Index/@item.IlanId">Görüntüle</a></td>
+                    }
+                    @if (TempData[$"Durum{@item.IlanId}"] == "SATILDI")
+                    {
+                        <td><a class="btn btn-warning">Satılan İlanı Görüntüleymezsiniz</a></td>
+                    }
+                    <td>Beğenilme Sayısı</td>
+
+            </tr>
+                }
+        
+        </tbody>
+    </table>
+</div>

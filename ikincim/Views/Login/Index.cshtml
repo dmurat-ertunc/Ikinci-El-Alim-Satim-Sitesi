@@ -1,0 +1,46 @@
+﻿@model UserLoginViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="formUser2">
+    <form asp-controller="Login" asp-action="Index" method="post">
+        <div class="box">
+            <div class="container">
+                <h2 style="margin-left:24px;">Giriş Yapma Ekranı</h2>
+                @if (ViewBag.Mesaj != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewBag.Mesaj
+                    </div>
+                }
+                <div class="input-field" style="margin-left:25px;">
+                    <input type="email" class="input" placeholder="E-Postanız" asp-for="Email" >
+                    <i class="bx bx-user"></i>
+                    <span class="text-black-50" asp-validation-for="Email" style="margin-right:50px;"></span>
+                    <br />
+                </div>
+                <div class="input-field" style="margin-left:25px;">
+                    <input type="password" class="input" placeholder="Şifreniz" asp-for="Password" >
+                    <i class="bx bx-user"></i>
+                    <span class="text-black-50" asp-validation-for="Password" style="margin-right:50px;"></span>
+                    <br />
+                </div>
+                <div class="input-field">
+                    <button type="submit" class="submit">Giriş Yap</button>
+                </div>
+                <div class="bottom">
+                    <div class="left">
+                        <input type="checkbox" id="check">
+                        <label for="check"> Remember Me</label>
+                    </div>
+                    <div class="right">
+                        <label><a href="#">Forgot password?</a></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
