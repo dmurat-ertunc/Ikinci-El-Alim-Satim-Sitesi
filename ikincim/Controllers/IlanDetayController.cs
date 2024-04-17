@@ -103,7 +103,7 @@ namespace ikincim.Controllers
                 }
             }
             int ilanId = ilanlarManager.TGetById(id).Id;
-            return RedirectToAction("Index", "IlanDetay", new { id = ilanId });   // gideceğimiz sayfaya parametre de yolladık
+            return RedirectToAction("Index", "IlanDetay", new { id = ilanId });   // gideceğimiz sayfaya parametre de yolladık bunu unutma
         }
 
         public IActionResult SikayetEt(int id)
