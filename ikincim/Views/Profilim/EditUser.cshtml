@@ -1,0 +1,60 @@
+﻿@model EditUserViewModel
+@{
+    ViewData["Title"] = "EditUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="margin-top:30px; margin-left:500px; background-color:#fff; border:1px whitesmoke inset border-radius:15px; width:900px; height:1200px;">
+    <h2 style="text-align:center;">Bilgilerimi Güncelle</h2>
+    @* @if (TempData["PassError"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["PassError"]
+        </div>
+    }
+    @if (TempData["PassOkey"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["PassOkey"]
+        </div>
+    } *@
+    <form asp-controller="Profilim" asp-action="PasswordChange" method="post" enctype="multipart/form-data">
+        <div style="margin-left:930px;">
+            <i class="fa-solid fa-user-tie" style="color:red; margin-left:-500px; font-size:40px;"></i>
+        </div>
+        <div style="float:left; justify-content:flex-start; margin-left:330px; margin-top:20px; padding:10px; border:1px whitesmoke solid; border-top-color:red; border-top-width:5px;">
+            <div class="mb-3 input-field">
+                <label class="form-label">Ad</label>
+                <input type="password" class="form-control input" asp-for="Name">
+                <span class="text-black text-black-50" asp-validation-for="Name"></span>
+            </div>
+            <div class="mb-3 input-field">
+                <label for="comment">Soyad</label>
+                <input type="password" class="form-control input" rows="15" asp-for="Surname"></input>
+                <span class="text-black text-black-50" asp-validation-for="Surname"></span>
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">E-Posta</label>
+                <input type="password" class="form-control input" asp-for="Email">
+                <span class="text-black text-black-50" asp-validation-for="Email"></span>
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">Kullanıcı Adı</label>
+                <input type="password" class="form-control input" asp-for="UserName" value="">
+                <span class="text-black text-black-50" asp-validation-for="UserName"></span>
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">Yaş</label>
+                <input type="password" class="form-control input" asp-for="Yas" value="@Model.Yas">
+                <span class="text-black text-black-50" asp-validation-for="Yas"></span>
+            </div>
+            <div class="mb-3 input-field">
+                <label class="form-label">Telefon Numarası</label>
+                <input type="password" class="form-control input" asp-for="PhoneNumber">
+                <span class="text-black text-black-50" asp-validation-for="PhoneNumber"></span>
+            </div>
+            <button type="submit" class="btn btn-info" style="width:250px">Bilgilerimi Güncelle</button>
+
+        </div>
+    </form>
+</div>

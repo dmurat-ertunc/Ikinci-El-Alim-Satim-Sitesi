@@ -98,5 +98,62 @@ namespace ikincim.Controllers
             };
             return View(userInformationViewModel);
         }
+
+
+        [HttpGet]
+        public IActionResult PasswordChange()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PasswordChange(UserPasswordChangeUserViewModel userPasswordChangeUserViewModel)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+            var currenUser = await userManager.FindByNameAsync(User.Identity!.Name!);
+
+            var checkOldPass = await userManager.CheckPasswordAsync(currenUser, userPasswordChangeUserViewModel.OldPassword);
+            if(!checkOldPass) 
+            {
+                TempData["PassError"] = "Eski Şifreniz Yanlış";
+                return View();
+            }
+            if(userPasswordChangeUserViewModel.OldPassword == userPasswordChangeUserViewModel.NewPassword) 
+            {
+                TempData["PassError"] = "Eski Şifre Yeni Şifre ile aynı olamaz";
+                return View();
+            }
+            var resultChangePassword = await userManager.ChangePasswordAsync(currenUser,userPasswordChangeUserViewModel.OldPassword, userPasswordChangeUserViewModel.NewPassword);
+            TempData["PassOkey"] = "Şifre Değiştirildi";
+
+
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser() {
+            var currenUser = await userManager.FindByNameAsync(User.Identity!.Name!);
+
+            var userEditViewModel = new EditUserViewModel()
+            {
+                Name = currenUser.Ad,
+                Surname = currenUser.Soyad,
+                Email = currenUser.Email,
+                UserName = currenUser.UserName,
+                Yas = currenUser.Yas,
+                PhoneNumber = currenUser.PhoneNumber
+            };
+            return View(userEditViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel editUserViewModel)
+        {
+            return View();
+
+        }
     }
 }
