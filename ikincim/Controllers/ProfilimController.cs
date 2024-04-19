@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using ikincim.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -81,6 +82,21 @@ namespace ikincim.Controllers
 
 
              return RedirectToAction("Ilanlarim","Profilim" );
+        }
+        public async Task<IActionResult> Bilgilerim() {
+            var currentUser = await userManager.FindByNameAsync(User.Identity!.Name!);
+
+            var userInformationViewModel = new UserInformationViewModel()
+            {
+                Id = currentUser.Id,
+                Name = currentUser.Ad,
+                Surname = currentUser.Soyad,
+                Email = currentUser.Email,
+                UserName = currentUser.UserName,
+                Yas = currentUser.Yas,
+                PhoneNumber = currentUser.PhoneNumber
+            };
+            return View(userInformationViewModel);
         }
     }
 }
