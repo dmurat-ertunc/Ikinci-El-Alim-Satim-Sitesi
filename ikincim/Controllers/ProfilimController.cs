@@ -152,8 +152,53 @@ namespace ikincim.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUser(EditUserViewModel editUserViewModel)
         {
+            var currentUser = await userManager.FindByNameAsync(User.Identity!.Name!);
+
+            if (currentUser != null)
+            {
+                currentUser.Ad = editUserViewModel.Name;
+                currentUser.Soyad = editUserViewModel.Surname;
+                currentUser.Email = editUserViewModel.Email;
+                currentUser.UserName = editUserViewModel.UserName;
+                currentUser.Yas = editUserViewModel.Yas;
+                currentUser.PhoneNumber = editUserViewModel.PhoneNumber;
+            }
+
+            var updateUser = await userManager.UpdateAsync(currentUser);
+            if (updateUser.Succeeded) {
+                return RedirectToAction("Bilgilerim", "Profilim");
+            }
+
             return View();
 
+        }
+
+        public async Task<IActionResult> BegendigimIlanlar()
+        {
+            var currentUser = await userManager.FindByNameAsync(User.Identity!.Name!);
+
+            LikeIlanViewModel likeIlanViewModel = new LikeIlanViewModel();
+
+            kategorilerIlanlarUrunlerUser.begendigimTMPs = (from p in ılanlarManager.TGetAll().ToList()
+                          join j in begeniManager.TGetAll().Where(x=> x.BegenenKullaniciId == currentUser.Id).ToList()
+                            on p.Id equals j.IlanId
+                          join e in kategorilerManager.TGetAll().ToList()
+                           on p.KategorilerId equals e.Id
+                          join k in urunlerManager.TGetAll().ToList()
+                            on p.UrunlerId equals k.Id
+                          select new BegendigimIlanlarTMP
+                          {
+                              Id = p.Id,
+                              IlanAd = p.IlanAd,
+                              Aciklama = p.Aciklama,
+                              Fiyat = p.Fiyat, 
+                              KategroiAd = e.KategoriAd,
+                              UrunCesiti = k.UrunCesiti,
+                              FotoUrl2 = p.FotoUrl2
+                          });
+            
+
+            return View(kategorilerIlanlarUrunlerUser);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace EntityLayer.Concrete
         public IEnumerable<KategorilerUrunlerIlanlarUserTMP> kategorilerUrunlerIlanlarUserTMPs { get; set; }
         public IEnumerable<ProfilimTMP> profilimTMPs { get;set; }
         public IEnumerable<Begeni> begenis { get;set; }
+        public IEnumerable<BegendigimIlanlarTMP> begendigimTMPs { get; set; }
 
         [Display(Name = "UserId")]
         [Required(ErrorMessage = "Bu alan boş bırakılamaz")]
